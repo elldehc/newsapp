@@ -1,4 +1,4 @@
-package com.example.newsapp;
+package com.java.liqibin;
 
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

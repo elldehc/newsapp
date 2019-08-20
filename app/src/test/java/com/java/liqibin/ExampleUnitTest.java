@@ -1,4 +1,4 @@
-package com.example.newsapp;
+package com.java.liqibin;
 
 import org.junit.Test;
 
