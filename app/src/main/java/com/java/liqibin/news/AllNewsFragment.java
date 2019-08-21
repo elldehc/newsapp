@@ -1,4 +1,4 @@
-package com.example.newsapp.news;
+package com.java.liqibin.news;
 
 import androidx.fragment.app.Fragment;
 

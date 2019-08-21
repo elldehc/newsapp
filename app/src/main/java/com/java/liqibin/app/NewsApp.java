@@ -1,4 +1,4 @@
-package com.example.newsapp.app;
+package com.java.liqibin.app;
 
 import android.app.Application;
 

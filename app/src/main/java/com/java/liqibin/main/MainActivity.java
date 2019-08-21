@@ -1,4 +1,4 @@
-package com.example.newsapp.main;
+package com.java.liqibin.main;
 
 import android.os.Bundle;
 
@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.newsapp.MeFragment;
-import com.example.newsapp.NewsFragment;
-import com.example.newsapp.R;
-import com.example.newsapp.RecommendationFragment;
+import com.java.liqibin.MeFragment;
+import com.java.liqibin.NewsFragment;
+import com.java.liqibin.R;
+import com.java.liqibin.RecommendationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
