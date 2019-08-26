@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -60,6 +63,28 @@ public class NewsActivity extends AppCompatActivity {
             VideoView vview=findViewById(R.id.videoView2);
             vview.setVideoPath(news.video);
             vview.start();
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.newsmenu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+//            case R.id.share:
+//                return true;
+            case R.id.addtofav:
+                return true;
+            case R.id.share_qq:
+                return true;
+            case R.id.share_wx:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

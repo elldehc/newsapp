@@ -3,4 +3,8 @@
     <string name="navigation_news">News</string>
     <string name="navigation_recommendation">Recommendation</string>
     <string name="navigation_me">Me</string>
+    <string name="share">share</string>
+    <string name="share_qq">share to qq</string>
+    <string name="share_wx">share to wechat</string>
+    <string name="addtofav">add to favourite</string>
 </resources>
