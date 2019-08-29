@@ -3,11 +3,13 @@ package com.java.liqibin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -61,8 +63,9 @@ public class NewsActivity extends AppCompatActivity {
         if(!news.video.equals(""))
         {
             VideoView vview=findViewById(R.id.videoView2);
-            vview.setVideoPath(news.video);
-            vview.start();
+            //vview.setVideoPath(news.video);
+            vview.setVideoURI(Uri.parse(news.video));
+            vview.setMediaController(new MediaController(this));
         }
     }
     @Override
