@@ -1,4 +1,4 @@
-package com.java.liqibin;
+package com.java.liqibin.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.java.liqibin.R;
 
 public class RecommendationFragment extends Fragment {
 

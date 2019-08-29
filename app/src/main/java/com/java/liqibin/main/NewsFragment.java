@@ -1,4 +1,4 @@
-package com.java.liqibin;
+package com.java.liqibin.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.java.liqibin.R;
 import com.java.liqibin.news.AllNewsFragment;
 import com.java.liqibin.news.TabAdapter;
 
