@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">李琪斌_News</string>
     <string name="navigation_news">News</string>
     <string name="navigation_recommendation">Recommendation</string>
     <string name="navigation_me">Me</string>

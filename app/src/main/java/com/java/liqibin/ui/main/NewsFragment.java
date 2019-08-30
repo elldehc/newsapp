@@ -1,4 +1,4 @@
-package com.java.liqibin;
+package com.java.liqibin.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,10 +11,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.java.liqibin.R;
+import com.java.liqibin.ui.news.AllNewsFragment;
+import com.java.liqibin.ui.news.TabAdapter;
 
 public class NewsFragment extends Fragment {
     private TabLayout tabLayout;
@@ -24,6 +26,7 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        assert appCompatActivity != null;
         Toolbar toolbar = appCompatActivity.findViewById(R.id.toolbar);
         appCompatActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = appCompatActivity.getSupportActionBar();
@@ -32,27 +35,12 @@ public class NewsFragment extends Fragment {
         }
 
         tabLayout = appCompatActivity.findViewById(R.id.newsTabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("测试1"));
-        tabLayout.addTab(tabLayout.newTab().setText("测试2"));
-
-
         viewPager = appCompatActivity.findViewById(R.id.newsViewPager);
-        viewPager.setAdapter(new PagerAdapter() {
-            private int count;
+        TabAdapter tabAdapter = new TabAdapter(appCompatActivity.getSupportFragmentManager());
 
-            @Override
-            public int getCount() {
-                return count;
-            }
+        tabAdapter.addFragment(new AllNewsFragment(), "News");
 
-            @Override
-            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                return false;
-            }
-
-
-        });
-
+        viewPager.setAdapter(tabAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 

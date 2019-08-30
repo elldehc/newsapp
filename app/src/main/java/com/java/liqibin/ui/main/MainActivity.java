@@ -1,4 +1,4 @@
-package com.java.liqibin.main;
+package com.java.liqibin.ui.main;
 
 import android.os.Bundle;
 
@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.java.liqibin.MeFragment;
-import com.java.liqibin.NewsFragment;
 import com.java.liqibin.R;
-import com.java.liqibin.RecommendationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     // Fragment
     private NewsFragment newsFragment;
     private RecommendationFragment recommendationFragment;
-    private MeFragment meFragment;
+    private UserFragment userFragment;
     private Fragment currentFragment;
 
     @Override
@@ -29,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             newsFragment = new NewsFragment();
             recommendationFragment = new RecommendationFragment();
-            meFragment = new MeFragment();
+            userFragment = new UserFragment();
 
             currentFragment = newsFragment;
             getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, currentFragment).commit();
@@ -48,21 +45,23 @@ public class MainActivity extends AppCompatActivity {
                     currentFragment = recommendationFragment;
                     return true;
                 case R.id.navigation_me:
-                    switchFragment(currentFragment, meFragment);
-                    currentFragment = meFragment;
+                    switchFragment(currentFragment, userFragment);
+                    currentFragment = userFragment;
                     return true;
             }
             return false;
         });
     }
 
-    private void switchFragment(Fragment currentFragment, Fragment targetFragment) {
-        if (currentFragment != targetFragment) {
+    /* 以下是 private 部分 */
+
+    private void switchFragment(Fragment from, Fragment to) {
+        if (from != to) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            if (!targetFragment.isAdded()) {
-                fragmentTransaction.hide(currentFragment).add(R.id.container_frame, targetFragment).commit();
+            if (!to.isAdded()) {
+                fragmentTransaction.hide(from).add(R.id.container_frame, to).commit();
             } else {
-                fragmentTransaction.hide(currentFragment).show(targetFragment).commit();
+                fragmentTransaction.hide(from).show(to).commit();
             }
         }
     }

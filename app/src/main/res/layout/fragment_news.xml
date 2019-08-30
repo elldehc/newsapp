@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewsFragment">
+    tools:context=".ui.main.NewsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:id="@+id/newsTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="center"
+            app:tabGravity="fill"
             app:tabMode="scrollable">
 
         </com.google.android.material.tabs.TabLayout>
