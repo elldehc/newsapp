@@ -17,12 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.java.liqibin.app.NewsApp;
 import com.java.liqibin.util.DatabaseHelper;
 import com.squareup.picasso.Picasso;
 import com.stx.xhb.xbanner.XBanner;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 class Keyword
@@ -73,7 +75,7 @@ public class NewsActivity extends AppCompatActivity {
         view4.setText(news.content);
         favored=cursor.getInt(7);
         if(news.image.length()>2) {
-            String[] t=news.image.substring(1,news.image.length()-1).split(",");
+            String[] t=news.image.substring(1,news.image.length()-1).split("\\s*,\\s*");
             XBanner mXBanner = (XBanner) findViewById(R.id.xbanner);
             final ArrayList<String> images=new ArrayList<>(),titles=new ArrayList<>();
             for(int i=0;i<t.length;i++) {
@@ -85,12 +87,18 @@ public class NewsActivity extends AppCompatActivity {
             mXBanner.loadImage(new XBanner.XBannerAdapter() {
                 @Override
                 public void loadBanner(XBanner banner, Object model, View view, int position) {
-
-                    Picasso.get().load(images.get(position)).resize(800, 600).into((ImageView) view);
+                    System.err.println(images.get(position));
+                    Glide.with(getApplicationContext()).load(Uri.parse(images.get(position))).error(R.drawable.ic_launcher_foreground).into((ImageView) view);
+                    //Picasso.get().load(images.get(position))/*.resize(800, 600)*/.error(R.drawable.ic_launcher_foreground).into((ImageView) view);
                 }
             });
 //            ImageView iview = findViewById(R.id.imageView2);
 //            Picasso.get().load(news.image.substring(1, news.image.length() - 1)).resize(800,600).into(iview);
+        }
+        else
+        {
+            XBanner mXBanner = (XBanner) findViewById(R.id.xbanner);
+            mXBanner.setVisibility(View.GONE);
         }
         if(!news.video.equals(""))
         {
@@ -98,6 +106,11 @@ public class NewsActivity extends AppCompatActivity {
             //vview.setVideoPath(news.video);
             vview.setVideoURI(Uri.parse(news.video));
             vview.setMediaController(new MediaController(this));
+        }
+        else
+        {
+            VideoView vview=findViewById(R.id.videoView2);
+            vview.setVisibility(View.GONE);
         }
     }
     @Override
