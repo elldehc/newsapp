@@ -22,7 +22,7 @@ public class DateTime {
     }
 
     public static DateTime now() {
-        return new DateTime(LocalDate.now(), LocalTime.now(ZoneId.of("Asia/Shanghai")));
+        return new DateTime(LocalDate.now(ZoneId.of("Asia/Shanghai")), LocalTime.now(ZoneId.of("Asia/Shanghai")));
     }
 
     public DateTime setDate(LocalDate date) {

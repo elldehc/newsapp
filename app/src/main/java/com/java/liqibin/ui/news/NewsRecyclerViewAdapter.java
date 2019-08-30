@@ -33,7 +33,7 @@ class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapt
         if (!holder.isAdded) {
             cursor.moveToPosition(position);
             String url = cursor.getString(cursor.getColumnIndex("image"));
-            url = url.substring(1, url.length() - 1).split(",")[0];
+            url = url.substring(1, url.length() - 1).split(", ")[0];
             if (url.length() > 0) {
                 new DownloadImageTask(holder.newsIcon).execute(url);
             } else {
@@ -49,6 +49,11 @@ class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapt
     @Override
     public int getItemCount() {
         return cursor.getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder {
