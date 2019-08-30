@@ -1,5 +1,7 @@
 package com.java.liqibin.ui.news;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.java.liqibin.NewsActivity;
 import com.java.liqibin.R;
 import com.java.liqibin.app.NewsApp;
 import com.java.liqibin.util.DatabaseHelper;
@@ -69,10 +72,10 @@ public class AllNewsFragment extends Fragment {
             super.onPostExecute(success);
             if (success) {
                 SQLiteDatabase database = NewsApp.getApp().getReadableDatabase();
-                cursor = database.query(DatabaseHelper.TABLE_NAME, new String[]{"_id", "image", "title", "publisher", "publishTime"},
+                cursor = database.query(DatabaseHelper.TABLE_NAME, new String[]{"_id", "image", "title", "publisher", "publishTime","newsID"},
                         null, null, null, null, null);
                 if (adapter == null) {
-                    adapter = new NewsRecyclerViewAdapter(cursor);
+                    adapter = new NewsRecyclerViewAdapter(cursor,activity);
                     newsList.setAdapter(adapter);
                 } else {
                     adapter.notifyDataSetChanged();

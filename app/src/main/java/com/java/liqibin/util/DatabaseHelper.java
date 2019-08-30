@@ -27,7 +27,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "title text, " +
                 "publisher text, " +
                 "publishTime text, " +
-                "json text" +
+                "json text, " +
+                "favored integer" +
                 ");";
         db.execSQL(sql);
     }

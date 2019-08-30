@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/share"
+        android:title="@string/share"
+        >
+        <menu>
+            <item android:id="@+id/share_qq"
+                android:title="@string/share_qq" />
+            <item android:id="@+id/share_wx"
+                android:title="@string/share_wx" />
+        </menu>
+    </item>
+    <item android:id="@+id/addtofav"
+        android:title="@string/addtofav"
+        />
+
+</menu>
