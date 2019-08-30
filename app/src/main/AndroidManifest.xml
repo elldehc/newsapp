@@ -18,11 +18,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".NewsActivity"></activity>
         <activity
-<<<<<<< HEAD
-            android:name=".main.MainActivity"
-=======
             android:name=".ui.main.MainActivity"
->>>>>>> dc0457d4211bf4a5ae17678d2ff08e674b67f757
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

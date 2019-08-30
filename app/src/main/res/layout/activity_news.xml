@@ -42,18 +42,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="800px"
+                    <com.stx.xhb.xbanner.XBanner
+                        android:id="@+id/xbanner"
+                        android:layout_width="match_parent"
                         android:layout_height="600px"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:src="@drawable/ic_launcher_background"
+                        app:AutoPlayTime="300"
+                        app:isAutoPlay="false"
+                        app:isShowIndicatorOnlyOne="false"
+                        app:isShowNumberIndicator="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:color/background_light" />
+                        app:pageChangeDuration="80"
+                        app:pointsContainerBackground="#44aaaaaa"
+                        app:pointsPosition="RIGHT"
+                        app:pointsVisibility="true"
+                        app:tipTextSize="12sp" />
+
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
