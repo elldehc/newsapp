@@ -56,12 +56,12 @@ class NewsResponse {
         }
 
         class Where {
-            int score;
+            double score;
             String word;
         }
 
         class Who {
-            int score;
+            double score;
             String word;
         }
     }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class DateTime {
@@ -21,7 +22,7 @@ public class DateTime {
     }
 
     public static DateTime now() {
-        return new DateTime(LocalDate.now(), LocalTime.now());
+        return new DateTime(LocalDate.now(), LocalTime.now(ZoneId.of("Asia/Shanghai")));
     }
 
     public DateTime setDate(LocalDate date) {
