@@ -59,14 +59,15 @@ public class GetNews {
             SQLiteDatabase db = NewsApp.getApp().getWritableDatabase();
             for (NewsResponse.News news : response.data) {
                 db.execSQL("insert or replace into " + DatabaseHelper.TABLE_NAME +
-                        " (newsID, category, image, title, publisher, publishTime, json) values (" +
+                        " (newsID, category, image, title, publisher, publishTime, json, favored) values (" +
                         "'" + news.newsID + "', " +
                         "'" + news.category + "', " +
                         "'" + news.image + "', " +
                         "'" + news.title + "', " +
                         "'" + news.publisher + "', " +
                         "'" + news.publishTime + "', " +
-                        "'" + gson.toJson(news) + "'" +
+                        "'" + gson.toJson(news) + "', " +
+                        "0" +
                         ");");
             }
             return true;

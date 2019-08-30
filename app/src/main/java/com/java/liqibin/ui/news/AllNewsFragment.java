@@ -1,6 +1,7 @@
 package com.java.liqibin.ui.news;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.java.liqibin.NewsActivity;
 import com.java.liqibin.R;
 import com.java.liqibin.app.NewsApp;
 import com.java.liqibin.util.DatabaseHelper;
@@ -88,7 +90,7 @@ public class AllNewsFragment extends Fragment {
             super.onPostExecute(success);
             if (success) {
                 SQLiteDatabase database = NewsApp.getApp().getReadableDatabase();
-                cursor = database.query(DatabaseHelper.TABLE_NAME, new String[]{"_id", "image", "title", "publisher"},
+                cursor = database.query(DatabaseHelper.TABLE_NAME, new String[]{"_id", "image", "title", "publisher","newsID"},
                         null, null, null, null, null);
                 if (adapter == null) {
                     adapter = new SimpleCursorAdapter(activity, R.layout.news_listitem, cursor,
@@ -107,7 +109,12 @@ public class AllNewsFragment extends Fragment {
                         public void bindView(View view, Context context, Cursor cursor) {
                             super.bindView(view, context, cursor);
                             view.setOnClickListener(view1 -> {
-                                Toast.makeText(context, "test", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, cursor.getString(4), Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(getActivity(), NewsActivity.class);
+                                String EXTRA_MESSAGE = "com.java.liqibin.NEWS_DETAIL";
+                                String message = cursor.getString(4);
+                                intent.putExtra(EXTRA_MESSAGE, message);
+                                startActivity(intent);
                             });
                         }
                     };
