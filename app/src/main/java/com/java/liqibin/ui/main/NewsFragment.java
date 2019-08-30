@@ -1,4 +1,4 @@
-package com.java.liqibin.main;
+package com.java.liqibin.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,17 +11,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.java.liqibin.R;
-import com.java.liqibin.news.AllNewsFragment;
-import com.java.liqibin.news.TabAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.java.liqibin.ui.news.AllNewsFragment;
+import com.java.liqibin.ui.news.TabAdapter;
 
 public class NewsFragment extends Fragment {
     private TabLayout tabLayout;

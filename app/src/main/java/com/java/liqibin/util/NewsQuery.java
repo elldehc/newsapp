@@ -1,7 +1,5 @@
 package com.java.liqibin.util;
 
-import java.time.LocalDateTime;
-
 public class NewsQuery {
     private int size;
     private DateTime startDate;
@@ -10,7 +8,7 @@ public class NewsQuery {
     private String categories;
 
     public NewsQuery() {
-        this.size = 20;
+        this.size = 15;
         this.startDate = null;
         this.endDate = null;
         this.words = null;

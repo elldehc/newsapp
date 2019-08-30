@@ -1,4 +1,4 @@
-package com.java.liqibin.main;
+package com.java.liqibin.ui.main;
 
 import android.os.Bundle;
 

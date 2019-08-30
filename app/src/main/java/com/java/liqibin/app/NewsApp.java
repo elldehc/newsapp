@@ -8,7 +8,7 @@ import com.java.liqibin.util.DatabaseHelper;
 public class NewsApp extends Application {
     private static NewsApp app;
 
-    private static DatabaseHelper databaseHelper;
+    private DatabaseHelper databaseHelper;
 
     public static synchronized NewsApp getApp() {
         return app;
