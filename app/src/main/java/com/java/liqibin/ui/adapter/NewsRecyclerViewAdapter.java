@@ -1,7 +1,6 @@
-package com.java.liqibin.ui.news;
+package com.java.liqibin.ui.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -16,16 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.NewsActivity;
 import com.java.liqibin.R;
-import com.java.liqibin.util.DownloadImageTask;
+import com.java.liqibin.model.http.DownloadImageTask;
 
-class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
+public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
-    private Cursor cursor;
     private Activity activity;
+    private Cursor cursor;
 
-    NewsRecyclerViewAdapter(@NonNull Cursor cursor,Activity activity) {
+    public NewsRecyclerViewAdapter(Activity activity, @NonNull Cursor cursor) {
+        this.activity = activity;
         this.cursor = cursor;
-        this.activity=activity;
     }
 
     @NonNull
@@ -83,7 +82,7 @@ class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapt
             itemView.setOnClickListener(view -> {
                 cursor.moveToPosition(position);
                 Toast.makeText(activity, cursor.getString(cursor.getColumnIndex("newsID")), Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(activity, NewsActivity.class);
+                Intent intent = new Intent(activity, NewsActivity.class);
                 String EXTRA_MESSAGE = "com.java.liqibin.NEWS_DETAIL";
                 String message = cursor.getString(cursor.getColumnIndex("newsID"));
                 intent.putExtra(EXTRA_MESSAGE, message);

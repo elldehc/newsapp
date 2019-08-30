@@ -1,4 +1,4 @@
-package com.java.liqibin.ui.main;
+package com.java.liqibin.ui.main.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,34 +1,43 @@
-package com.java.liqibin.util;
+package com.java.liqibin.model.db;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class NewsDatabase extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     public static final String TABLE_NAME = "news";
 
-    public DatabaseHelper(@Nullable Context context, @Nullable String name) {
-        super(context, name, null, VERSION);
-        getWritableDatabase();
+    public static NewsDatabase database;
+
+    private NewsDatabase(@Nullable Context context) {
+        super(context, "news.db", null, VERSION);
+    }
+
+    public static void  newInstance(@Nullable Context context) {
+        database = new NewsDatabase(context);
+    }
+
+    public static SQLiteDatabase getReadable() {
+        return database.getReadableDatabase();
+    }
+
+    public static SQLiteDatabase getWritable() {
+        return database.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table if not exists " + TABLE_NAME + " (" +
-                "_id integer primary key autoincrement, " +
-                "newsID text unique, " +
+                "newsID text primary key, " +
                 "category text, " +
                 "image text, " +
                 "title text, " +
                 "publisher text, " +
                 "publishTime text, " +
-                "json text, " +
-                "favored integer" +
+                "json text" +
                 ");";
         db.execSQL(sql);
     }

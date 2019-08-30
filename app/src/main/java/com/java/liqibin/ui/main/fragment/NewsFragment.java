@@ -1,4 +1,4 @@
-package com.java.liqibin.ui.main;
+package com.java.liqibin.ui.main.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,11 +16,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.java.liqibin.R;
 import com.java.liqibin.ui.news.AllNewsFragment;
-import com.java.liqibin.ui.news.TabAdapter;
+import com.java.liqibin.ui.news.ColumnFragment;
+import com.java.liqibin.ui.adapter.TabAdapter;
 
 public class NewsFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private static final String[] columns = {"娱乐", "军事", "教育", "文化", "健康", "财经", "体育", "汽车", "科技", "社会"};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class NewsFragment extends Fragment {
         TabAdapter tabAdapter = new TabAdapter(appCompatActivity.getSupportFragmentManager());
 
         tabAdapter.addFragment(new AllNewsFragment(), "News");
+        for (String column : columns) {
+            tabAdapter.addFragment(new ColumnFragment(column), column);
+        }
 
         viewPager.setAdapter(tabAdapter);
         tabLayout.setupWithViewPager(viewPager);

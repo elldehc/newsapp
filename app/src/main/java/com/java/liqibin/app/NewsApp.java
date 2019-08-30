@@ -3,12 +3,10 @@ package com.java.liqibin.app;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.java.liqibin.util.DatabaseHelper;
+import com.java.liqibin.model.db.NewsDatabase;
 
 public class NewsApp extends Application {
     private static NewsApp app;
-
-    private DatabaseHelper databaseHelper;
 
     public static synchronized NewsApp getApp() {
         return app;
@@ -19,14 +17,14 @@ public class NewsApp extends Application {
         super.onCreate();
         app = this;
 
-        databaseHelper = new DatabaseHelper(this, "news.db");
+        NewsDatabase.newInstance(this);
     }
 
-    public SQLiteDatabase getWritableDatabase() {
-        return databaseHelper.getWritableDatabase();
-    }
-
-    public SQLiteDatabase getReadableDatabase() {
-        return databaseHelper.getReadableDatabase();
-    }
+//    public SQLiteDatabase getWritableDatabase() {
+//        return newsDatabase.getWritableDatabase();
+//    }
+//
+//    public SQLiteDatabase getReadableDatabase() {
+//        return newsDatabase.getReadableDatabase();
+//    }
 }

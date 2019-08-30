@@ -1,4 +1,4 @@
-package com.java.liqibin.ui.news;
+package com.java.liqibin.ui.adapter;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

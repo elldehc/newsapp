@@ -1,4 +1,4 @@
-package com.java.liqibin.util;
+package com.java.liqibin.model.http;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

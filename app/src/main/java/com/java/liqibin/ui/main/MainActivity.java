@@ -8,6 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.java.liqibin.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.java.liqibin.ui.main.fragment.NewsFragment;
+import com.java.liqibin.ui.main.fragment.RecommendationFragment;
+import com.java.liqibin.ui.main.fragment.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
 

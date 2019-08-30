@@ -15,16 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.R;
 import com.java.liqibin.app.NewsApp;
-import com.java.liqibin.model.db.NewsDatabase;
-import com.java.liqibin.model.http.LoadNewsTask;
 import com.java.liqibin.model.bean.DateTime;
 import com.java.liqibin.model.bean.NewsQuery;
+import com.java.liqibin.model.db.NewsDatabase;
+import com.java.liqibin.model.http.LoadNewsTask;
 
 import java.lang.ref.WeakReference;
 
+public class ColumnFragment extends Fragment {
+    private String columnName;
+    private Cursor cursor;
 
-public class AllNewsFragment extends Fragment {
-    private Cursor cursor = null;
+    public ColumnFragment(String columnName) {
+        this.columnName = columnName;
+    }
 
     @Nullable
     @Override
@@ -42,10 +46,10 @@ public class AllNewsFragment extends Fragment {
         new LoadNewsTask(new WeakReference<>(activity), new WeakReference<>(newsList), () -> {
             SQLiteDatabase database = NewsDatabase.getReadable();
             cursor = database.query(NewsDatabase.TABLE_NAME,
-                    new String[]{"newsID", "image", "title", "publisher", "publishTime"},
-                    null, null, null, null, "publishTime desc");
+                    new String[]{"newsID", "image", "title", "publisher", "publishTime", "category"},
+                    "category=?", new String[]{columnName}, null, null, "publishTime desc");
             return cursor;
-        }).execute(new NewsQuery().setEndDate(DateTime.now()));
+        }).execute(new NewsQuery().setCategories(columnName).setEndDate(DateTime.now()));
     }
 
     @Override
@@ -55,5 +59,4 @@ public class AllNewsFragment extends Fragment {
             cursor.close();
         }
     }
-
 }

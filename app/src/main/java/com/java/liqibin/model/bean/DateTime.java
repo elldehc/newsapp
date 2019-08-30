@@ -1,4 +1,4 @@
-package com.java.liqibin.util;
+package com.java.liqibin.model.bean;
 
 import androidx.annotation.NonNull;
 

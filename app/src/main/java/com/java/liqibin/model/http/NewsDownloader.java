@@ -1,24 +1,24 @@
-package com.java.liqibin.util;
+package com.java.liqibin.model.http;
 
-import android.app.Activity;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.java.liqibin.app.NewsApp;
+import com.java.liqibin.model.bean.DateTime;
+import com.java.liqibin.model.bean.News;
+import com.java.liqibin.model.bean.NewsQuery;
+import com.java.liqibin.model.bean.NewsResponse;
+import com.java.liqibin.model.db.NewsDatabase;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.List;
 import java.util.Scanner;
 
-public class GetNews {
+public class NewsDownloader {
     private static final String baseUrl = "https://api2.newsminer.net/svc/news/queryNewsList";
 
-    public static boolean search(NewsQuery query) {
+    public static boolean fetch(NewsQuery query) {
         StringBuilder builder = new StringBuilder(baseUrl);
         try {
             builder.append('?');
@@ -43,7 +43,7 @@ public class GetNews {
 
             String categories = query.getCategories();
             if (categories != null) {
-                builder.append("categories=").append(URLEncoder.encode(categories, "UTF-8")).append('&');
+                builder.append("categories=").append(categories).append('&');
             }
 
             builder.setLength(builder.length() - 1);  // pop
@@ -56,18 +56,17 @@ public class GetNews {
             Gson gson = new Gson();
             NewsResponse response = gson.fromJson(json, NewsResponse.class);
 
-            SQLiteDatabase db = NewsApp.getApp().getWritableDatabase();
-            for (NewsResponse.News news : response.data) {
-                db.execSQL("insert or replace into " + DatabaseHelper.TABLE_NAME +
-                        " (newsID, category, image, title, publisher, publishTime, json, favored) values (" +
+            SQLiteDatabase db = NewsDatabase.getWritable();
+            for (News news : response.data) {
+                db.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
+                        " (newsID, category, image, title, publisher, publishTime, json) values (" +
                         "'" + news.newsID + "', " +
                         "'" + news.category + "', " +
                         "'" + news.image + "', " +
                         "'" + news.title + "', " +
                         "'" + news.publisher + "', " +
                         "'" + news.publishTime + "', " +
-                        "'" + gson.toJson(news) + "', " +
-                        "0" +
+                        "'" + gson.toJson(news) + "'" +
                         ");");
             }
             return true;

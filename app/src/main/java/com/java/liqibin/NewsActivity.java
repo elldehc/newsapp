@@ -19,43 +19,18 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.java.liqibin.app.NewsApp;
-import com.java.liqibin.util.DatabaseHelper;
-import com.squareup.picasso.Picasso;
+import com.java.liqibin.model.bean.News;
+import com.java.liqibin.model.db.NewsDatabase;
 import com.stx.xhb.xbanner.XBanner;
 
-import java.net.URL;
 import java.util.ArrayList;
 
-class Keyword
-{
-    double score;
-    String word;
-};
-class Person
-{
-    int count;
-    String linkedURL,mention;
-};
-class Location
-{
-    int count;
-    double lng,lat;
-    String linkedURL,mention;
-};
-class NewsData
-{
-    String image,publishTime,language,video,title,content,newsID,crawlTime,publisher,category;
-    Keyword[] keywords,when,where,who;
-    Person[] persons,organizations;
-    Location[] locations;
-};
 public class NewsActivity extends AppCompatActivity {
     static final String EXTRA_MESSAGE = "com.java.liqibin.NEWS_DETAIL";
-    NewsData news;
+    News news;
     SQLiteDatabase database;
     Cursor cursor;
-    int favored;
+    int favored = 0;
     MenuItem addtofav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +38,16 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         Intent intent = getIntent();
         String message = intent.getStringExtra(EXTRA_MESSAGE);
-        database = NewsApp.getApp().getWritableDatabase();
-        cursor = database.query(DatabaseHelper.TABLE_NAME, new String[]{"newsID", "category", "image", "title", "publisher", "publishTime", "json", "favored"},
+        database = NewsDatabase.getWritable();
+        cursor = database.query(NewsDatabase.TABLE_NAME, new String[]{"newsID", "category", "image", "title", "publisher", "publishTime", "json"},
                 "newsID = '"+message+"'", null, null, null, null);
         cursor.moveToFirst();
         Gson gson=new Gson();
-        news=gson.fromJson(cursor.getString(6),NewsData.class);
-        TextView view1=findViewById(R.id.textView);
+        news=gson.fromJson(cursor.getString(6), News.class);
+        TextView view1=findViewById(R.id.title);
         view1.setText(news.title);
-        TextView view4=findViewById(R.id.textView4);
+        TextView view4=findViewById(R.id.content);
         view4.setText(news.content);
-        favored=cursor.getInt(7);
         if(news.image.length()>2) {
             String[] t=news.image.substring(1,news.image.length()-1).split("\\s*,\\s*");
             XBanner mXBanner = (XBanner) findViewById(R.id.xbanner);
@@ -141,20 +115,20 @@ public class NewsActivity extends AppCompatActivity {
 //            case R.id.share:
 //                return true;
             case R.id.addtofav:
-                database.execSQL("insert or replace into " + DatabaseHelper.TABLE_NAME +
-                        " (newsID, category, image, title, publisher, publishTime, json, favored) values (" +
-                        "'" + cursor.getString(0) + "', " +
-                        "'" + cursor.getString(1) + "', " +
-                        "'" + cursor.getString(2) + "', " +
-                        "'" + cursor.getString(3) + "', " +
-                        "'" + cursor.getString(4) + "', " +
-                        "'" + cursor.getString(5) + "', " +
-                        "'" + cursor.getString(6) + "', " +
-                        (favored==0?"1":"0") +
-                        ");");
-                favored=1-favored;
-                addtofav.setTitle(getString(favored==1?R.string.deletefromfav:R.string.addtofav));
-                Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
+//                database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
+//                        " (newsID, category, image, title, publisher, publishTime, json, favored) values (" +
+//                        "'" + cursor.getString(0) + "', " +
+//                        "'" + cursor.getString(1) + "', " +
+//                        "'" + cursor.getString(2) + "', " +
+//                        "'" + cursor.getString(3) + "', " +
+//                        "'" + cursor.getString(4) + "', " +
+//                        "'" + cursor.getString(5) + "', " +
+//                        "'" + cursor.getString(6) + "', " +
+//                        (favored==0?"1":"0") +
+//                        ");");
+//                favored=1-favored;
+//                addtofav.setTitle(getString(favored==1?R.string.deletefromfav:R.string.addtofav));
+//                Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.share_qq:
                 return true;
