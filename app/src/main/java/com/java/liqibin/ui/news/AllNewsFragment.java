@@ -14,6 +14,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.java.liqibin.R;
 import com.java.liqibin.app.NewsApp;
 import com.java.liqibin.util.DatabaseHelper;
 import com.java.liqibin.util.DateTime;
+import com.java.liqibin.util.DownloadImageTask;
 import com.java.liqibin.util.GetNews;
 import com.java.liqibin.util.NewsQuery;
 
@@ -97,12 +99,16 @@ public class AllNewsFragment extends Fragment {
                             super.setViewImage(v, value);
                             value = value.substring(1, value.length() - 1).split(",")[0];
                             if (value.length() > 0) {
-                                try {
-                                    v.setImageDrawable(Drawable.createFromStream((InputStream) new URL(value).getContent(), "icon"));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+//                                new DownloadImageTask(v).execute(value);
                             }
+                        }
+
+                        @Override
+                        public void bindView(View view, Context context, Cursor cursor) {
+                            super.bindView(view, context, cursor);
+                            view.setOnClickListener(view1 -> {
+                                Toast.makeText(context, "test", Toast.LENGTH_SHORT).show();
+                            });
                         }
                     };
 
