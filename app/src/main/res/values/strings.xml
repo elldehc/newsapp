@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">李琪斌_News</string>
-    <string name="navigation_news">News</string>
-    <string name="navigation_recommendation">Recommendation</string>
-    <string name="navigation_me">Me</string>
-    <string name="share">share</string>
-    <string name="share_qq">share to qq</string>
-    <string name="share_wx">share to wechat</string>
-    <string name="addtofav">add to favourite</string>
-    <string name="deletefromfav">delete from favourite</string>
-    <string name="share_qzone">share to qzone</string>
-    <string name="share_wxpyq">share to wechat moments</string>
-    <string name="toggleday">toggle day/night view</string>
+    <string name="navigation_news">新闻</string>
+    <string name="navigation_recommendation">推荐</string>
+    <string name="navigation_me">我</string>
+    <string name="share">分享</string>
+    <string name="share_qq">分享到QQ</string>
+    <string name="share_wx">分享到微信</string>
+    <string name="addtofav">添加到收藏</string>
+    <string name="deletefromfav">从收藏中删除</string>
+    <string name="share_qzone">分享到QQ空间</string>
+    <string name="share_wxpyq">分享到微信朋友圈</string>
+    <string name="toggleday">切换主题</string>
 </resources>

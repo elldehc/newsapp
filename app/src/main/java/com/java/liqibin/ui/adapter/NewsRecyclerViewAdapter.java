@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.NewsActivity;
 import com.java.liqibin.R;
-import com.java.liqibin.model.http.DownloadImageTask;
+import com.java.liqibin.ui.task.DownloadImageTask;
 
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
@@ -90,4 +90,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             });
         }
     }
+
+
 }

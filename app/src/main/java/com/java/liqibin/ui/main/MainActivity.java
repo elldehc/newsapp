@@ -1,9 +1,12 @@
 package com.java.liqibin.ui.main;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -58,7 +61,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /* 以下是 private 部分 */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        MenuItem item = menu.findItem(R.id.search_item);
+        return true;
+    }
 
     private void switchFragment(Fragment from, Fragment to) {
         if (from != to) {

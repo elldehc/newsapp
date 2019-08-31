@@ -1,4 +1,4 @@
-package com.java.liqibin.model.http;
+package com.java.liqibin.ui.task;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,15 +8,16 @@ import android.widget.ImageView;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.net.URLConnection;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
-    private ImageView view;
+    private WeakReference<ImageView> view;
 
     public DownloadImageTask(ImageView view) {
-        this.view = view;
+        this.view = new WeakReference<>(view);
     }
 
     @Override
@@ -35,6 +36,9 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        view.setImageBitmap(bitmap);
+        ImageView v = view.get();
+        if (v != null) {
+            v.setImageBitmap(bitmap);
+        }
     }
 }

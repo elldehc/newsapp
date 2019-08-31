@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -30,24 +29,34 @@ public class NewsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         assert appCompatActivity != null;
-        Toolbar toolbar = appCompatActivity.findViewById(R.id.toolbar);
+
+        Toolbar toolbar = appCompatActivity.findViewById(R.id.newsToolbar);
         appCompatActivity.setSupportActionBar(toolbar);
-        ActionBar actionBar = appCompatActivity.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle("News");
-        }
 
         tabLayout = appCompatActivity.findViewById(R.id.newsTabLayout);
         viewPager = appCompatActivity.findViewById(R.id.newsViewPager);
         TabAdapter tabAdapter = new TabAdapter(appCompatActivity.getSupportFragmentManager());
 
-        tabAdapter.addFragment(new AllNewsFragment(), "News");
+        tabAdapter.addFragment(new AllNewsFragment(), "最新");
         for (String column : columns) {
             tabAdapter.addFragment(new ColumnFragment(column), column);
         }
 
         viewPager.setAdapter(tabAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null) {
+                if (tab.getCustomView() != null) {
+                    View tabView = (View) tab.getCustomView().getParent();
+                    tabView.setOnLongClickListener((v) -> {
+
+                        return true;
+                    });
+                }
+            }
+        }
     }
 
     @Nullable
@@ -55,4 +64,5 @@ public class NewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
+
 }
