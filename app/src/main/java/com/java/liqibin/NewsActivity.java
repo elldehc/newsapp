@@ -1,16 +1,25 @@
 package com.java.liqibin;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -21,9 +30,16 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.java.liqibin.model.bean.News;
 import com.java.liqibin.model.db.NewsDatabase;
+import com.mob.MobSDK;
 import com.stx.xhb.xbanner.XBanner;
 
 import java.util.ArrayList;
+
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 public class NewsActivity extends AppCompatActivity {
     static final String EXTRA_MESSAGE = "com.java.liqibin.NEWS_DETAIL";
@@ -32,10 +48,15 @@ public class NewsActivity extends AppCompatActivity {
     Cursor cursor;
     int favored = 0;
     MenuItem addtofav;
+    final ArrayList<String> images=new ArrayList<>(),titles=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        ActionBar ab=getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         database = NewsDatabase.getWritable();
@@ -51,7 +72,6 @@ public class NewsActivity extends AppCompatActivity {
         if(news.image.length()>2) {
             String[] t=news.image.substring(1,news.image.length()-1).split("\\s*,\\s*");
             XBanner mXBanner = (XBanner) findViewById(R.id.xbanner);
-            final ArrayList<String> images=new ArrayList<>(),titles=new ArrayList<>();
             for(int i=0;i<t.length;i++) {
                 images.add(t[i]);
                 titles.add("");
@@ -131,11 +151,37 @@ public class NewsActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.share_qq:
+                showShare(QQ.NAME);
                 return true;
             case R.id.share_wx:
+                showShare(Wechat.NAME);
+                return true;
+            case R.id.share_wxpyq:
+                showShare(WechatMoments.NAME);
+                return true;
+            case R.id.share_qzone:
+                showShare(QZone.NAME);
+                return true;
+            case R.id.toggleday:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
+                recreate();
+                //showAnimation();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    void showShare(String platform) {
+        final OnekeyShare oks = new OnekeyShare();
+        if (platform != null) {
+            oks.setPlatform(platform);
+        }
+        oks.setTitle(news.title);
+        oks.setTitleUrl("http://sharesdk.cn");
+        oks.setText(news.content);
+        if(images.size()>0)oks.setImageUrl(images.get(0));
+        oks.setUrl("http://sharesdk.cn");
+        oks.show(MobSDK.getContext());
+    }
+
 }

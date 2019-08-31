@@ -8,4 +8,7 @@
     <string name="share_wx">分享到微信</string>
     <string name="addtofav">添加到收藏</string>
     <string name="deletefromfav">从收藏中删除</string>
+    <string name="share_qzone">分享到QQ空间</string>
+    <string name="share_wxpyq">分享到微信朋友圈</string>
+    <string name="toggleday">切换主题</string>
 </resources>

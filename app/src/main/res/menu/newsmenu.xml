@@ -7,12 +7,18 @@
         <menu>
             <item android:id="@+id/share_qq"
                 android:title="@string/share_qq" />
+            <item android:id="@+id/share_qzone"
+                android:title="@string/share_qzone" />
             <item android:id="@+id/share_wx"
                 android:title="@string/share_wx" />
+            <item android:id="@+id/share_wxpyq"
+                android:title="@string/share_wxpyq" />
         </menu>
     </item>
     <item android:id="@+id/addtofav"
         android:title="@string/addtofav"
         />
-
+    <item android:id="@+id/toggleday"
+        android:title="@string/toggleday"
+        />
 </menu>
