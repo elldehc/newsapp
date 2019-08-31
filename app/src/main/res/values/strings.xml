@@ -8,4 +8,7 @@
     <string name="share_wx">share to wechat</string>
     <string name="addtofav">add to favourite</string>
     <string name="deletefromfav">delete from favourite</string>
+    <string name="share_qzone">share to qzone</string>
+    <string name="share_wxpyq">share to wechat moments</string>
+    <string name="toggleday">toggle day/night view</string>
 </resources>
