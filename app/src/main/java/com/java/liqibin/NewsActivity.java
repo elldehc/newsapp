@@ -32,6 +32,7 @@ import com.java.liqibin.model.bean.News;
 import com.java.liqibin.model.db.NewsDatabase;
 import com.mob.MobSDK;
 import com.stx.xhb.xbanner.XBanner;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
+@EnableDragToClose
 public class NewsActivity extends AppCompatActivity {
     static final String EXTRA_MESSAGE = "com.java.liqibin.NEWS_DETAIL";
     News news;
