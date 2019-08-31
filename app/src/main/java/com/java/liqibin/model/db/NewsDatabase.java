@@ -37,7 +37,9 @@ public class NewsDatabase extends SQLiteOpenHelper {
                 "title text, " +
                 "publisher text, " +
                 "publishTime text, " +
-                "json text" +
+                "json text," +
+                "favored integer," +
+                "lastview integer" +
                 ");";
         db.execSQL(sql);
     }
