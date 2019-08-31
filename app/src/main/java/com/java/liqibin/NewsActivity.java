@@ -27,6 +27,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.google.gson.Gson;
 import com.java.liqibin.model.bean.News;
 import com.java.liqibin.model.db.NewsDatabase;
@@ -100,7 +102,7 @@ public class NewsActivity extends AppCompatActivity {
                 @Override
                 public void loadBanner(XBanner banner, Object model, View view, int position) {
                     System.err.println(images.get(position));
-                    Glide.with(getApplicationContext()).load(Uri.parse(images.get(position))).error(R.drawable.ic_launcher_foreground).into((ImageView) view);
+                    Glide.with(getApplicationContext()).load(Uri.parse(images.get(position))).error(R.drawable.ic_launcher_foreground).transform(new CenterCrop()).into((ImageView) view);
                     //Picasso.get().load(images.get(position))/*.resize(800, 600)*/.error(R.drawable.ic_launcher_foreground).into((ImageView) view);
                 }
             });
