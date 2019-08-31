@@ -14,9 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.R;
-import com.java.liqibin.app.NewsApp;
 import com.java.liqibin.model.db.NewsDatabase;
-import com.java.liqibin.model.http.LoadNewsTask;
+import com.java.liqibin.ui.task.LoadNewsTask;
 import com.java.liqibin.model.bean.DateTime;
 import com.java.liqibin.model.bean.NewsQuery;
 

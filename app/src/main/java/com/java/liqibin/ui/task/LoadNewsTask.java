@@ -1,13 +1,15 @@
-package com.java.liqibin.model.http;
+package com.java.liqibin.ui.task;
 
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.model.bean.NewsQuery;
+import com.java.liqibin.model.http.NewsDownloader;
 import com.java.liqibin.ui.adapter.NewsRecyclerViewAdapter;
 
 import java.lang.ref.WeakReference;
@@ -38,6 +40,7 @@ public class LoadNewsTask extends AsyncTask<NewsQuery, Void, Boolean> {
                 if (v != null) {
                     Cursor cursor = helper.query();
                     adapter = new NewsRecyclerViewAdapter(activity.get(), cursor);
+                    v.addItemDecoration(new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL));
                     v.setAdapter(adapter);
                 }
             } else {
