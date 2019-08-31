@@ -20,9 +20,9 @@ public class LoadNewsTask extends AsyncTask<NewsQuery, Void, Boolean> {
     private NewsRecyclerViewAdapter adapter;
     private QueryHelper helper;
 
-    public LoadNewsTask(WeakReference<Activity> activity, WeakReference<RecyclerView> recyclerView, QueryHelper helper) {
-        this.activity = activity;
-        this.view = recyclerView;
+    public LoadNewsTask(Activity activity, RecyclerView recyclerView, QueryHelper helper) {
+        this.activity = new WeakReference<>(activity);
+        this.view = new WeakReference<>(recyclerView);
         this.helper = helper;
     }
 

@@ -42,7 +42,7 @@ public class ColumnFragment extends Fragment {
         Activity activity = getActivity();
         RecyclerView newsList = view.findViewById(R.id.newsList);
 
-        new LoadNewsTask(new WeakReference<>(activity), new WeakReference<>(newsList), () -> {
+        new LoadNewsTask(activity, newsList, () -> {
             SQLiteDatabase database = NewsDatabase.getReadable();
             cursor = database.query(NewsDatabase.TABLE_NAME,
                     new String[]{"newsID", "image", "title", "publisher", "publishTime", "category"},

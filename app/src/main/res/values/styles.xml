@@ -10,6 +10,7 @@
         <item name="android:textColor">@android:color/primary_text_light</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="textBackground">#00000000</item>
+        <item name="textColor">@android:color/primary_text_light</item>
     </style>
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
@@ -22,5 +23,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <attr name="textBackground" format="color"/>
+    <attr name="textColor" format="color" />
 
 </resources>
