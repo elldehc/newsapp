@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.java.liqibin.model.db.NewsDatabase;
 import com.youngfeng.snake.Snake;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 public class NewsApp extends Application {
     private static NewsApp app;
@@ -21,11 +22,4 @@ public class NewsApp extends Application {
         NewsDatabase.newInstance(this);
     }
 
-//    public SQLiteDatabase getWritableDatabase() {
-//        return newsDatabase.getWritableDatabase();
-//    }
-//
-//    public SQLiteDatabase getReadableDatabase() {
-//        return newsDatabase.getReadableDatabase();
-//    }
 }

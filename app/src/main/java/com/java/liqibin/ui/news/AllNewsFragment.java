@@ -18,8 +18,8 @@ import com.java.liqibin.model.db.NewsDatabase;
 import com.java.liqibin.ui.task.LoadNewsTask;
 import com.java.liqibin.model.bean.DateTime;
 import com.java.liqibin.model.bean.NewsQuery;
-
-import java.lang.ref.WeakReference;
+import com.java.liqibin.ui.task.RefreshTask;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 
 public class AllNewsFragment extends Fragment {
@@ -38,13 +38,22 @@ public class AllNewsFragment extends Fragment {
         Activity activity = getActivity();
         RecyclerView newsList = view.findViewById(R.id.newsList);
 
-        new LoadNewsTask(new WeakReference<>(activity), new WeakReference<>(newsList), () -> {
+        LoadNewsTask.QueryHelper queryHelper = () -> {
             SQLiteDatabase database = NewsDatabase.getReadable();
             cursor = database.query(NewsDatabase.TABLE_NAME,
                     new String[]{"newsID", "image", "title", "publisher", "publishTime"},
-                    null, null, null, null, "publishTime desc");
+                    null, null, null, null, "publishTime desc", "15");
             return cursor;
-        }).execute(new NewsQuery().setEndDate(DateTime.now()));
+        };
+
+        SmartRefreshLayout refreshLayout = view.findViewById(R.id.refresh_layout);
+        refreshLayout.setOnRefreshListener((layout) -> {
+            new RefreshTask(activity, newsList, queryHelper, (SmartRefreshLayout) layout)
+                    .execute(new NewsQuery().setEndDate(DateTime.now()));
+        });
+
+        new LoadNewsTask(activity, newsList, queryHelper)
+                .execute(new NewsQuery().setEndDate(DateTime.now()));
     }
 
     @Override
