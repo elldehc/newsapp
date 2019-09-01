@@ -65,7 +65,7 @@ public class NewsDownloader {
 
             SQLiteDatabase db = NewsDatabase.getWritable();
             for (News news : response.data) {
-                db.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
+                db.execSQL("insert or ignore into " + NewsDatabase.TABLE_NAME +
                         " (newsID, category, image, title, publisher, publishTime, json) values (" +
                         "'" + news.newsID + "', " +
                         "'" + news.category + "', " +

@@ -27,11 +27,14 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.google.gson.Gson;
 import com.java.liqibin.model.bean.News;
 import com.java.liqibin.model.db.NewsDatabase;
 import com.mob.MobSDK;
 import com.stx.xhb.xbanner.XBanner;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
 
@@ -41,6 +44,7 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
+@EnableDragToClose
 public class NewsActivity extends AppCompatActivity {
     static final String EXTRA_MESSAGE = "com.java.liqibin.NEWS_DETAIL";
     News news;
@@ -49,8 +53,10 @@ public class NewsActivity extends AppCompatActivity {
     int favored = 0;
     MenuItem addtofav;
     final ArrayList<String> images=new ArrayList<>(),titles=new ArrayList<>();
+    long timenow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        timenow=System.currentTimeMillis()/1000;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -60,9 +66,23 @@ public class NewsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         database = NewsDatabase.getWritable();
-        cursor = database.query(NewsDatabase.TABLE_NAME, new String[]{"newsID", "category", "image", "title", "publisher", "publishTime", "json"},
+        cursor = database.query(NewsDatabase.TABLE_NAME, new String[]{"newsID", "category", "image", "title", "publisher", "publishTime", "json","favored"},
                 "newsID = '"+message+"'", null, null, null, null);
         cursor.moveToFirst();
+        favored=cursor.getInt(7);
+        database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
+                " (newsID, category, image, title, publisher, publishTime, json, favored, lastview) values (" +
+                "'" + cursor.getString(0) + "', " +
+                "'" + cursor.getString(1) + "', " +
+                "'" + cursor.getString(2) + "', " +
+                "'" + cursor.getString(3) + "', " +
+                "'" + cursor.getString(4) + "', " +
+                "'" + cursor.getString(5) + "', " +
+                "'" + cursor.getString(6) + "', " +
+                favored +", "+
+                timenow+
+                ");");
+
         Gson gson=new Gson();
         news=gson.fromJson(cursor.getString(6), News.class);
         TextView view1=findViewById(R.id.title);
@@ -82,7 +102,7 @@ public class NewsActivity extends AppCompatActivity {
                 @Override
                 public void loadBanner(XBanner banner, Object model, View view, int position) {
                     System.err.println(images.get(position));
-                    Glide.with(getApplicationContext()).load(Uri.parse(images.get(position))).error(R.drawable.ic_launcher_foreground).into((ImageView) view);
+                    Glide.with(getApplicationContext()).load(Uri.parse(images.get(position))).error(R.drawable.ic_launcher_foreground).transform(new CenterCrop()).into((ImageView) view);
                     //Picasso.get().load(images.get(position))/*.resize(800, 600)*/.error(R.drawable.ic_launcher_foreground).into((ImageView) view);
                 }
             });
@@ -135,20 +155,21 @@ public class NewsActivity extends AppCompatActivity {
 //            case R.id.share:
 //                return true;
             case R.id.addtofav:
-//                database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
-//                        " (newsID, category, image, title, publisher, publishTime, json, favored) values (" +
-//                        "'" + cursor.getString(0) + "', " +
-//                        "'" + cursor.getString(1) + "', " +
-//                        "'" + cursor.getString(2) + "', " +
-//                        "'" + cursor.getString(3) + "', " +
-//                        "'" + cursor.getString(4) + "', " +
-//                        "'" + cursor.getString(5) + "', " +
-//                        "'" + cursor.getString(6) + "', " +
-//                        (favored==0?"1":"0") +
-//                        ");");
-//                favored=1-favored;
-//                addtofav.setTitle(getString(favored==1?R.string.deletefromfav:R.string.addtofav));
-//                Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
+                database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
+                        " (newsID, category, image, title, publisher, publishTime, json, favored, lastview) values (" +
+                        "'" + cursor.getString(0) + "', " +
+                        "'" + cursor.getString(1) + "', " +
+                        "'" + cursor.getString(2) + "', " +
+                        "'" + cursor.getString(3) + "', " +
+                        "'" + cursor.getString(4) + "', " +
+                        "'" + cursor.getString(5) + "', " +
+                        "'" + cursor.getString(6) + "', " +
+                        (favored==0?"1, ":"0, ") +
+                        timenow+
+                        ");");
+                favored=1-favored;
+                addtofav.setTitle(getString(favored==1?R.string.deletefromfav:R.string.addtofav));
+                Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.share_qq:
                 showShare(QQ.NAME);
