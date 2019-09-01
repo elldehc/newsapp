@@ -38,6 +38,9 @@ import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
@@ -199,10 +202,10 @@ public class NewsActivity extends AppCompatActivity {
         }
         oks.setTitle(news.title);
         oks.setTitleUrl("http://sharesdk.cn");
-        oks.setText(news.content.length()>140?news.content.substring(0,140):news.content);
+        oks.setText(news.content);
         if(images.size()>0)oks.setImageUrl(images.get(0));
         oks.setUrl("http://sharesdk.cn");
-        oks.show(MobSDK.getContext());
+        oks.show(this);
     }
 
 }
