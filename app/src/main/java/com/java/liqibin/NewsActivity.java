@@ -199,7 +199,7 @@ public class NewsActivity extends AppCompatActivity {
         }
         oks.setTitle(news.title);
         oks.setTitleUrl("http://sharesdk.cn");
-        oks.setText(news.content);
+        oks.setText(news.content.length()>140?news.content.substring(0,140):news.content);
         if(images.size()>0)oks.setImageUrl(images.get(0));
         oks.setUrl("http://sharesdk.cn");
         oks.show(MobSDK.getContext());
