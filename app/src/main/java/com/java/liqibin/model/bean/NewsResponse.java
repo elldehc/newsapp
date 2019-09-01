@@ -1,10 +1,10 @@
 package com.java.liqibin.model.bean;
 
-import com.java.liqibin.model.bean.News;
+import java.util.ArrayList;
 
 public class NewsResponse {
     public int pageSize;
     public int total;
-    public News[] data;
+    public ArrayList<News> data;
     public int currentPage;
 }

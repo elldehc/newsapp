@@ -6,13 +6,15 @@ public class NewsQuery {
     private DateTime endDate;
     private String words;
     private String categories;
+    private int page;
 
     public NewsQuery() {
         this.size = 15;
         this.startDate = null;
-        this.endDate = null;
+        this.endDate = DateTime.now();
         this.words = null;
         this.categories = null;
+        this.page = 1;
     }
 
     public int getSize() {
@@ -57,6 +59,15 @@ public class NewsQuery {
 
     public NewsQuery setCategories(String categories) {
         this.categories = categories;
+        return this;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public NewsQuery setPage(int page) {
+        this.page = page;
         return this;
     }
 }

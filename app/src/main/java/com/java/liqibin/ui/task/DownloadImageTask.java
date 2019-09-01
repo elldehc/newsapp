@@ -14,10 +14,10 @@ import java.net.URLConnection;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
-    private WeakReference<ImageView> view;
+    private WeakReference<ImageView> refView;
 
     public DownloadImageTask(ImageView view) {
-        this.view = new WeakReference<>(view);
+        this.refView = new WeakReference<>(view);
     }
 
     @Override
@@ -36,9 +36,9 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        ImageView v = view.get();
-        if (v != null) {
-            v.setImageBitmap(bitmap);
+        ImageView view = refView.get();
+        if (view != null && bitmap != null) {
+            view.setImageBitmap(bitmap);
         }
     }
 }

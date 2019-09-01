@@ -1,9 +1,12 @@
 package com.java.liqibin.ui.main.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +24,7 @@ import com.java.liqibin.ui.adapter.TabAdapter;
 public class NewsFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Toolbar toolbar;
 
     private static final String[] columns = {"娱乐", "军事", "教育", "文化", "健康", "财经", "体育", "汽车", "科技", "社会"};
 
@@ -30,7 +34,7 @@ public class NewsFragment extends Fragment {
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         assert appCompatActivity != null;
 
-        Toolbar toolbar = appCompatActivity.findViewById(R.id.newsToolbar);
+        toolbar = view.findViewById(R.id.newsToolbar);
         appCompatActivity.setSupportActionBar(toolbar);
 
         tabLayout = appCompatActivity.findViewById(R.id.newsTabLayout);
@@ -50,8 +54,11 @@ public class NewsFragment extends Fragment {
             if (tab != null) {
                 if (tab.getCustomView() != null) {
                     View tabView = (View) tab.getCustomView().getParent();
+                    tabView.setOnClickListener((v) -> {
+                        Toast.makeText(appCompatActivity, "Click", Toast.LENGTH_SHORT).show();
+                    });
                     tabView.setOnLongClickListener((v) -> {
-
+                        Toast.makeText(appCompatActivity, "Long Press", Toast.LENGTH_SHORT).show();
                         return true;
                     });
                 }
@@ -59,10 +66,13 @@ public class NewsFragment extends Fragment {
         }
     }
 
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
-
 }
