@@ -33,6 +33,7 @@ public class NewsDatabase extends SQLiteOpenHelper {
         String sql = "create table if not exists " + TABLE_NAME + " (" +
                 "newsID text primary key, " +
                 "category text, " +
+                "keywords text, " +
                 "image text, " +
                 "title text, " +
                 "publisher text, " +

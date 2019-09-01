@@ -31,6 +31,10 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             e.printStackTrace();
             return null;
         }
+        catch (Exception e){
+            e.printStackTrace();
+            throw(e);
+        }
     }
 
     @Override

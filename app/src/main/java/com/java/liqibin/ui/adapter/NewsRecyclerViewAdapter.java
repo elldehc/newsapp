@@ -17,8 +17,12 @@ import com.java.liqibin.R;
 import com.java.liqibin.model.bean.News;
 import com.java.liqibin.model.bean.NewsResponse;
 import com.java.liqibin.ui.task.DownloadImageTask;
+import com.java.liqibin.ui.task.LoadRecommendNewsTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
@@ -26,18 +30,26 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     private Activity activity;
     private List<News> data;
     private int currentPage;
+    public LinkedList<News> buffer;
+    public HashSet<String> bufferSet;
 
     public NewsRecyclerViewAdapter(Activity activity) {
         this.activity = activity;
         this.data = new ArrayList<>();
+        buffer=new LinkedList<>();
+        bufferSet=new HashSet<>();
         currentPage = 0;
     }
+    public int getBufferSize(){return buffer.size();}
 
     public void addResponse(NewsResponse response) {
         data.addAll(response.data);
         currentPage++;
     }
-
+    public void addAll(Integer response) {
+        for(int i=0;i<15;i++)data.add(buffer.pop());
+        currentPage+=response;
+    }
     public void clearNews() {
         data.clear();
         currentPage = 0;

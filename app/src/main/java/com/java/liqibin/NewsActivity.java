@@ -73,18 +73,8 @@ public class NewsActivity extends AppCompatActivity {
                 "newsID = '"+message+"'", null, null, null, null);
         cursor.moveToFirst();
         favored=cursor.getInt(7);
-        database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
-                " (newsID, category, image, title, publisher, publishTime, json, favored, lastview) values (" +
-                "'" + cursor.getString(0) + "', " +
-                "'" + cursor.getString(1) + "', " +
-                "'" + cursor.getString(2) + "', " +
-                "'" + cursor.getString(3) + "', " +
-                "'" + cursor.getString(4) + "', " +
-                "'" + cursor.getString(5) + "', " +
-                "'" + cursor.getString(6) + "', " +
-                favored +", "+
-                timenow+
-                ");");
+        database.execSQL("update " + NewsDatabase.TABLE_NAME +
+                " set lastview = "+timenow+" where newsID = '"+cursor.getString(0)+"'");
 
         Gson gson=new Gson();
         news=gson.fromJson(cursor.getString(6), News.class);
@@ -158,21 +148,11 @@ public class NewsActivity extends AppCompatActivity {
 //            case R.id.share:
 //                return true;
             case R.id.addtofav:
-                database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
-                        " (newsID, category, image, title, publisher, publishTime, json, favored, lastview) values (" +
-                        "'" + cursor.getString(0) + "', " +
-                        "'" + cursor.getString(1) + "', " +
-                        "'" + cursor.getString(2) + "', " +
-                        "'" + cursor.getString(3) + "', " +
-                        "'" + cursor.getString(4) + "', " +
-                        "'" + cursor.getString(5) + "', " +
-                        "'" + cursor.getString(6) + "', " +
-                        (favored==0?"1, ":"0, ") +
-                        timenow+
-                        ");");
                 favored=1-favored;
+                database.execSQL("update " + NewsDatabase.TABLE_NAME +
+                        " set favored = "+favored+" where newsID = '"+cursor.getString(0)+"'");
                 addtofav.setTitle(getString(favored==1?R.string.deletefromfav:R.string.addtofav));
-                Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.share_qq:
                 showShare(QQ.NAME);
