@@ -9,20 +9,20 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.lang.ref.WeakReference;
 
-public class RefreshTask extends LoadNewsTask {
+public class LoadMoreTask extends LoadNewsTask {
     private WeakReference<SmartRefreshLayout> refLayout;
 
-    public RefreshTask(Activity activity, RecyclerView recyclerView, SmartRefreshLayout smartRefreshLayout) {
-        super(activity, recyclerView);
-        this.refLayout = new WeakReference<>(smartRefreshLayout);
+    public LoadMoreTask(Activity activity, RecyclerView view, SmartRefreshLayout smartRefreshLayout) {
+        super(activity, view);
+        refLayout = new WeakReference<>(smartRefreshLayout);
     }
 
     @Override
     protected void onPostExecute(NewsResponse response) {
         super.onPostExecute(response);
         SmartRefreshLayout smartRefreshLayout = refLayout.get();
-        if(smartRefreshLayout != null) {
-            smartRefreshLayout.finishRefresh(response != null);
+        if (smartRefreshLayout != null) {
+            smartRefreshLayout.finishLoadMore(response != null);
         }
     }
 }

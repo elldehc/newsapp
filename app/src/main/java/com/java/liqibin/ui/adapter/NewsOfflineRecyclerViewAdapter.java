@@ -14,37 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.NewsActivity;
 import com.java.liqibin.R;
-import com.java.liqibin.model.bean.News;
-import com.java.liqibin.model.bean.NewsResponse;
 import com.java.liqibin.ui.task.DownloadImageTask;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
+public class NewsOfflineRecyclerViewAdapter extends RecyclerView.Adapter<NewsOfflineRecyclerViewAdapter.NewsViewHolder> {
 
     private Activity activity;
-    private List<News> data;
-    private int currentPage;
+    private Cursor cursor;
 
-    public NewsRecyclerViewAdapter(Activity activity) {
+    public NewsOfflineRecyclerViewAdapter(Activity activity) {
         this.activity = activity;
-        this.data = new ArrayList<>();
-        currentPage = 0;
     }
 
-    public void addResponse(NewsResponse response) {
-        data.addAll(response.data);
-        currentPage++;
-    }
-
-    public void clearNews() {
-        data.clear();
-        currentPage = 0;
-    }
-
-    public int getCurrentPage() {
-        return currentPage;
+    public void setCursor(Cursor cursor) {
+        this.cursor = cursor;
     }
 
     @NonNull
@@ -57,14 +39,23 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         if (!holder.isAdded) {
-            News news = data.get(position);
-            holder.addNews(news);
+            synchronized (cursor) {
+                cursor.moveToPosition(position);
+                String url = cursor.getString(cursor.getColumnIndex("image"));
+                url = url.substring(1, url.length() - 1).split(", ")[0];
+                holder.newsIcon.setImageResource(R.mipmap.ic_launcher);
+                holder.newsTitle.setText(cursor.getString(cursor.getColumnIndex("title")));
+                holder.newsPublisher.setText(cursor.getString(cursor.getColumnIndex("publisher")));
+                holder.newsTime.setText(cursor.getString(cursor.getColumnIndex("publishTime")));
+                holder.newsID = cursor.getString(cursor.getColumnIndex("newsID"));
+                holder.isAdded = true;
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return cursor.getCount();
     }
 
     @Override
@@ -95,22 +86,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                 intent.putExtra(EXTRA_MESSAGE, message);
                 activity.startActivity(intent);
             });
-        }
-
-        void addNews(News news) {
-            String url = news.image;
-            url = url.substring(1, url.length() - 1).split(", ")[0];
-            if (url.length() > 0) {
-                newsIcon.setImageResource(R.drawable.ic_action_waiting);
-                new DownloadImageTask(newsIcon).execute(url);
-            } else {
-                newsIcon.setImageResource(R.mipmap.ic_launcher);
-            }
-            newsTitle.setText(news.title);
-            newsPublisher.setText(news.publisher);
-            newsTime.setText(news.publishTime);
-            newsID = news.newsID;
-            isAdded = true;
         }
     }
 

@@ -13,12 +13,14 @@ import com.java.liqibin.model.db.NewsDatabase;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class NewsDownloader {
     private static final String baseUrl = "https://api2.newsminer.net/svc/news/queryNewsList";
 
-    public static boolean fetch(NewsQuery query) {
+    public static NewsResponse fetch(NewsQuery query) {
         StringBuilder builder = new StringBuilder(baseUrl);
         try {
             builder.append('?');
@@ -46,6 +48,11 @@ public class NewsDownloader {
                 builder.append("categories=").append(categories).append('&');
             }
 
+            int page = query.getPage();
+            if (page != -1) {
+                builder.append("page=").append(page).append('&');
+            }
+
             builder.setLength(builder.length() - 1);  // pop
 
             URL url = new URL(builder.toString());
@@ -69,10 +76,10 @@ public class NewsDownloader {
                         "'" + gson.toJson(news) + "'" +
                         ");");
             }
-            return true;
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
