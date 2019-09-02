@@ -18,7 +18,5 @@
     <item android:id="@+id/addtofav"
         android:title="@string/addtofav"
         />
-    <item android:id="@+id/toggleday"
-        android:title="@string/toggleday"
-        />
+
 </menu>

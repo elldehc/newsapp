@@ -1,5 +1,7 @@
 package com.java.liqibin.ui.main;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.app.UiModeManager;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +10,9 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.java.liqibin.R;
+import com.java.liqibin.ui.FavouriteActivity;
 import com.java.liqibin.model.db.NewsDatabase;
 import com.java.liqibin.ui.main.fragment.NewsFragment;
 import com.java.liqibin.ui.main.fragment.RecommendationFragment;
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SearchView searchView;
     private List<String> history;
+    private static boolean atMypage=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         userFragment = new UserFragment();
         searchResultFragment = new SearchResultFragment();
 
-        currentFragment = newsFragment;
+        if(!atMypage)currentFragment = newsFragment;else currentFragment=userFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, currentFragment).commit();
 
         // 设置底部导航栏
@@ -71,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener((menuItem) -> {
             switch (menuItem.getItemId()) {
                 case R.id.navigation_news:
+                    atMypage=false;
                     setSupportActionBar(newsFragment.getToolbar());
                     switchFragment(newsFragment);
                     return true;
                 case R.id.navigation_recommendation:
+                    atMypage=false;
                     setSupportActionBar(newsFragment.getToolbar());
                     switchFragment(recommendationFragment);
                     return true;
                 case R.id.navigation_me:
+                    atMypage=true;
                     switchFragment(userFragment);
                     return true;
             }
@@ -98,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.toolbar_search:
                 searchView.autoOpenOrClose();
                 return true;
-            case R.id.toolbar_night:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES ?
-                        AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
-                recreate();
-                return true;
+//            case R.id.toolbar_night:
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES ?
+//                        AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
+//                recreate();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -178,4 +187,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    public void onButton1Click(View view)
+    {
+        Activity activity=this;
+        Intent intent = new Intent(activity, FavouriteActivity.class);
+        activity.startActivity(intent);
+        //overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
+    }
+
+    public void onButton2Click(View view)
+    {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES ?
+                        AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
+        Activity activity=this;
+        Intent intent = new Intent(activity, MainActivity.class);
+        activity.startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
+    }
+
+//    @Override
+//    protected void onPause() {
+//        Toast.makeText(this, "Main activity: paused", Toast.LENGTH_SHORT).show();
+//        System.err.println("Main activity: paused");
+//        super.onPause();
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        Toast.makeText(this, "Main activity: stopped", Toast.LENGTH_SHORT).show();
+//        System.err.println("Main activity: stopped");
+//        super.onStop();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        Toast.makeText(this, "Main activity: destroyed", Toast.LENGTH_SHORT).show();
+//        System.err.println("Main activity: destroyed");
+//        super.onDestroy();
+//    }
 }

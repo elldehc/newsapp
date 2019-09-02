@@ -66,6 +66,7 @@ public class NewsActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         ActionBar ab=getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         database = NewsDatabase.getWritable();
@@ -166,10 +167,13 @@ public class NewsActivity extends AppCompatActivity {
             case R.id.share_qzone:
                 showShare(QZone.NAME);
                 return true;
-            case R.id.toggleday:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
-                recreate();
-                //showAnimation();
+//            case R.id.toggleday:
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
+//                recreate();
+//                //showAnimation();
+//                return true;
+            case android.R.id.home:
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -186,6 +190,12 @@ public class NewsActivity extends AppCompatActivity {
         if(images.size()>0)oks.setImageUrl(images.get(0));
         oks.setUrl("http://sharesdk.cn");
         oks.show(this);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        //overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
+        return true;
     }
 
 }

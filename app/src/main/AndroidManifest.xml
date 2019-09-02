@@ -29,9 +29,11 @@
         <activity android:name=".NewsActivity"
             android:parentActivityName=".ui.main.MainActivity">
         </activity>
+        <activity android:name=".ui.FavouriteActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+        </activity>
         <activity android:name=".ui.category.EditCategoryActivity"
             android:parentActivityName=".ui.main.MainActivity">
-
         </activity>
     </application>
 

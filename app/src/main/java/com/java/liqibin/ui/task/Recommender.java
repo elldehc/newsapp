@@ -127,39 +127,45 @@ public class Recommender extends AsyncTask<Void, Void, String[]> {
         refreshLayout.setOnRefreshListener((layout) -> {
             if (CheckNetworkState.isNetwordConnected(activity)) {
                 offline = false;
-                NewsQuery[] queries = new NewsQuery[5];
-                for (int i = 1; i <= 5; i++)
-                    if (strings[i] != null) {
-                        queries[i - 1] = new NewsQuery().setWords(strings[i]);
-                    }
-                new RefreshRecommendTask(activity, newsList, (SmartRefreshLayout) layout).execute(queries);
+                NewsQuery[] queries=new NewsQuery[5];
+                boolean hasq=false;
+                for(int i=1;i<=5;i++)if(strings[i]!=null)
+                {
+                    hasq=true;
+                    queries[i-1]=new NewsQuery().setWords(strings[i]);
+                }
+                if(!hasq)queries[0]=new NewsQuery();
+                new RefreshRecommendTask(activity, newsList, (SmartRefreshLayout) layout).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,queries);
             } else {
                 offline = true;
                 Toast.makeText(activity, "无法连接到网络，将加载离线新闻！", Toast.LENGTH_SHORT).show();
-                new OfflineRefreshTask(activity, newsList, showEmpty, queryHelper, (SmartRefreshLayout) layout).execute();
+                new OfflineRefreshTask(activity, newsList,showEmpty, queryHelper, (SmartRefreshLayout) layout).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         refreshLayout.setOnLoadMoreListener((layout) -> {
             if (CheckNetworkState.isNetwordConnected(activity)) {
                 if (offline) {
                     Toast.makeText(activity, "回到顶部刷新即可获取在线新闻！\n继续加载离线新闻...", Toast.LENGTH_SHORT).show();
-                    new OfflineLoadMoreTask(activity, newsList,showEmpty, loadMoreHelper, (SmartRefreshLayout) layout).execute();
+                    new OfflineLoadMoreTask(activity, newsList, showEmpty,loadMoreHelper, (SmartRefreshLayout) layout).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
                     NewsRecyclerViewAdapter adapter = (NewsRecyclerViewAdapter) newsList.getAdapter();
                     int page = adapter == null ? 1 : adapter.getCurrentPage() + 1;
-                    NewsQuery[] queries = new NewsQuery[5];
-                    for (int i = 1; i <= 5; i++)
-                        if (strings[i] != null) {
-                            queries[i - 1] = new NewsQuery().setWords(strings[i]).setPage(page);
-                        }
-                    new LoadRecommendMoreTask(activity, newsList, (SmartRefreshLayout) layout).execute(queries);
+                    NewsQuery[] queries=new NewsQuery[5];
+                    boolean hasq=false;
+                    for(int i=1;i<=5;i++)if(strings[i]!=null)
+                    {
+                        hasq=true;
+                        queries[i-1]=new NewsQuery().setWords(strings[i]).setPage(page);
+                    }
+                    if(!hasq)queries[0]=new NewsQuery();
+                    new LoadRecommendMoreTask(activity, newsList, (SmartRefreshLayout) layout).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,queries);
                 }
             } else {
                 if (!offline) {
                     Toast.makeText(activity, "无法连接到网络，回到顶部刷新可获取离线新闻！", Toast.LENGTH_SHORT).show();
                     layout.finishLoadMore(false);
                 } else {
-                    new OfflineLoadMoreTask(activity, newsList, showEmpty, loadMoreHelper, (SmartRefreshLayout) layout).execute();
+                    new OfflineLoadMoreTask(activity, newsList, showEmpty,loadMoreHelper, (SmartRefreshLayout) layout).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });
