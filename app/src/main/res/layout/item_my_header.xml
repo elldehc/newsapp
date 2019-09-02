@@ -10,6 +10,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:text="当前分组"
+        android:textColor="?android:textColorPrimary"
         android:textSize="16sp"/>
 
     <TextView
@@ -19,7 +20,7 @@
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@id/tv"
         android:text="长按编辑，拖动排序"
-        android:textColor="@color/gray"
+        android:textColor="@android:color/darker_gray"
         android:textSize="12sp"/>
 
     <TextView
@@ -32,12 +33,12 @@
         android:gravity="center"
         android:textSize="13sp"
         android:background="@drawable/mask_shape_stroke_red"
-        android:textColor="@color/red"
+        android:textColor="@android:color/holo_red_dark"
         android:text="编辑"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/gray"/>
+        android:background="@android:color/darker_gray"/>
 </RelativeLayout>

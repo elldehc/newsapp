@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_margin="8dp"
-        android:background="@drawable/bg_channel"
+        android:background="?android:colorBackground"
+        android:textColor="?android:textColorPrimary"
         android:layout_centerInParent="true"
         android:gravity="center"/>
 

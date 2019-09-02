@@ -18,7 +18,9 @@ import com.java.liqibin.ui.main.fragment.RecommendationFragment;
 import com.java.liqibin.ui.main.fragment.SearchResultFragment;
 import com.java.liqibin.ui.main.fragment.UserFragment;
 import com.java.liqibin.ui.news.FavouriteFragment;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 
+@EnableDragToClose
 public class FavouriteActivity extends AppCompatActivity{
 
     // Fragment

@@ -25,6 +25,7 @@ import com.java.liqibin.ui.task.RefreshTask;
 import com.java.liqibin.util.CheckNetworkState;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -34,31 +35,31 @@ import java.util.Map;
 
 import static java.lang.Math.log;
 
-public class Recommender extends AsyncTask<Void,Void,String[]> {
+public class Recommender extends AsyncTask<Void, Void, String[]> {
 
-    View view;
-    Activity activity;
+    private WeakReference<View> refView;
+    private WeakReference<Activity> refActivity;
     private Cursor cursor;
     private boolean offline = false;
-    public Recommender(View view,Activity activity)
-    {
+
+    public Recommender(View view, Activity activity) {
         super();
-        this.view=view;
-        this.activity=activity;
+        this.refView = new WeakReference<>(view);
+        this.refActivity = new WeakReference<>(activity);
     }
+
     @Override
     protected String[] doInBackground(Void... voids) {
-        SQLiteDatabase database= NewsDatabase.getWritable();
-        long timenow=System.currentTimeMillis()/1000;
-        cursor=database.query(NewsDatabase.TABLE_NAME, new String[]{"newsID", "keywords","lastview"},
-                "lastview >= "+(timenow-3*86400), null, null, null, "lastview desc");
-        HashMap<String,Double> mp=new HashMap<>();
-        Gson gson=new Gson();
-        for(;cursor.moveToNext();)
-        {
-            News news=new News();
-            news.keywords=gson.fromJson(cursor.getString(1), (Type) News.Keyword[].class);
-            for(int i=0;i<news.keywords.length;i++) {
+        SQLiteDatabase database = NewsDatabase.getWritable();
+        long timenow = System.currentTimeMillis() / 1000;
+        cursor = database.query(NewsDatabase.TABLE_NAME, new String[]{"newsID", "keywords", "lastview"},
+                "lastview >= " + (timenow - 3 * 86400), null, null, null, "lastview desc");
+        HashMap<String, Double> mp = new HashMap<>();
+        Gson gson = new Gson();
+        for (; cursor.moveToNext(); ) {
+            News news = new News();
+            news.keywords = gson.fromJson(cursor.getString(1), (Type) News.Keyword[].class);
+            for (int i = 0; i < news.keywords.length; i++) {
                 if (mp.containsKey(news.keywords[i].word)) {
                     Double t = mp.get(news.keywords[i].word);
                     t += news.keywords[i].score * log(cursor.getInt(2) - (timenow - 3 * 86400) + 1);
@@ -69,28 +70,27 @@ public class Recommender extends AsyncTask<Void,Void,String[]> {
                 }
             }
         }
-        String[] ans=new String[6];
-        Map.Entry[] tmp=new Map.Entry[mp.size()];
+        String[] ans = new String[6];
+        Map.Entry[] tmp = new Map.Entry[mp.size()];
         mp.entrySet().toArray(tmp);
         Arrays.sort(tmp, new Comparator<Map.Entry>() {
             @Override
             public int compare(Map.Entry entry, Map.Entry t1) {
-                return Double.compare((Double)entry.getValue(),(Double)t1.getValue());
+                return Double.compare((Double) entry.getValue(), (Double) t1.getValue());
             }
         });
-        for(int i=0;i<mp.size();i++)
-        {
-            ans[i+1]=(String)tmp[i].getKey();
-            if(i==4)break;
+        for (int i = 0; i < mp.size(); i++) {
+            ans[i + 1] = (String) tmp[i].getKey();
+            if (i == 4) break;
         }
-        if(mp.size()>0) {
-            StringBuilder sb = new StringBuilder("keywords glob '*"+ans[1]+"*' ");
-            for (int i = 2; i <= 5; i++) if (ans[i] != null)
-            {
-                sb.append("or keywords glob '*");
-                sb.append(ans[i]);
-                sb.append("*' ");
-            }
+        if (mp.size() > 0) {
+            StringBuilder sb = new StringBuilder("keywords glob '*" + ans[1] + "*' ");
+            for (int i = 2; i <= 5; i++)
+                if (ans[i] != null) {
+                    sb.append("or keywords glob '*");
+                    sb.append(ans[i]);
+                    sb.append("*' ");
+                }
             ans[0] = sb.toString();
         }
         return ans;
@@ -100,7 +100,11 @@ public class Recommender extends AsyncTask<Void,Void,String[]> {
     @Override
     protected void onPostExecute(String[] strings) {
         super.onPostExecute(strings);
+        View view = refView.get();
+        Activity activity = refActivity.get();
         RecyclerView newsList = view.findViewById(R.id.newsList);
+
+        TextView showEmpty = view.findViewById(R.id.show_empty);
 
         OfflineLoadNewsTask.QueryHelper queryHelper = () -> {
             SQLiteDatabase database = NewsDatabase.getReadable();
@@ -120,7 +124,6 @@ public class Recommender extends AsyncTask<Void,Void,String[]> {
         };
 
         SmartRefreshLayout refreshLayout = view.findViewById(R.id.refresh_layout);
-        TextView showEmpty = view.findViewById(R.id.show_empty);
         refreshLayout.setOnRefreshListener((layout) -> {
             if (CheckNetworkState.isNetwordConnected(activity)) {
                 offline = false;

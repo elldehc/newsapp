@@ -66,6 +66,7 @@ public class NewsActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         ActionBar ab=getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         database = NewsDatabase.getWritable();
@@ -171,6 +172,9 @@ public class NewsActivity extends AppCompatActivity {
                 recreate();
                 //showAnimation();
                 return true;
+            case android.R.id.home:
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -186,6 +190,11 @@ public class NewsActivity extends AppCompatActivity {
         if(images.size()>0)oks.setImageUrl(images.get(0));
         oks.setUrl("http://sharesdk.cn");
         oks.show(this);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
 }
