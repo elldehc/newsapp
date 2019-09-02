@@ -1,6 +1,7 @@
 package com.java.liqibin.ui.task;
 
 import android.app.Activity;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +13,8 @@ import java.lang.ref.WeakReference;
 public class LoadMoreTask extends LoadNewsTask {
     private WeakReference<SmartRefreshLayout> refLayout;
 
-    public LoadMoreTask(Activity activity, RecyclerView view, SmartRefreshLayout smartRefreshLayout) {
-        super(activity, view);
+    public LoadMoreTask(Activity activity, RecyclerView view, TextView showEmpty, SmartRefreshLayout smartRefreshLayout) {
+        super(activity, view, showEmpty);
         refLayout = new WeakReference<>(smartRefreshLayout);
     }
 

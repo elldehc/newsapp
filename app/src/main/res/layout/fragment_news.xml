@@ -9,8 +9,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/newsViewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </androidx.viewpager.widget.ViewPager>
@@ -27,14 +27,42 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="新闻" />
+            app:title="新闻APP">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/newsTabLayout"
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="scrollable"
-            app:tabTextColor="?attr/textColor" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/newsTabLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:tabGravity="fill"
+                app:tabMode="scrollable"/>
+
+            <ImageView
+                android:id="@+id/edit_column"
+                android:layout_width="40dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="8dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_more" />
+        </LinearLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
+
+
+    <km.lmy.searchview.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardBackgroundColor="?android:colorBackground"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="4dp"
+        app:hintText="搜索新闻" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

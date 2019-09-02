@@ -21,15 +21,13 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     public void addFragment(Fragment fragment, String title) {
         tabs.add(fragment);
         titles.add(title);
+        notifyDataSetChanged();
     }
 
-    public boolean removeFragment(int position) {
-        if (position < tabs.size()) {
-            tabs.remove(position);
-            titles.remove(position);
-            return true;
-        }
-        return false;
+    public void clear() {
+        tabs.clear();
+        titles.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -47,5 +45,5 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return tabs.size();
     }
-    
+
 }
