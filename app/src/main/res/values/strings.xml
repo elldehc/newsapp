@@ -11,4 +11,5 @@
     <string name="share_qzone">分享到QQ空间</string>
     <string name="share_wxpyq">分享到微信朋友圈</string>
     <string name="toggleday">切换主题</string>
+    <string name="showfav">收藏的新闻</string>
 </resources>

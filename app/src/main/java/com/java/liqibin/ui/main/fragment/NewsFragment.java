@@ -37,6 +37,7 @@ public class NewsFragment extends Fragment {
         toolbar = view.findViewById(R.id.newsToolbar);
         appCompatActivity.setSupportActionBar(toolbar);
 
+
         tabLayout = appCompatActivity.findViewById(R.id.newsTabLayout);
         viewPager = appCompatActivity.findViewById(R.id.newsViewPager);
         TabAdapter tabAdapter = new TabAdapter(appCompatActivity.getSupportFragmentManager());
