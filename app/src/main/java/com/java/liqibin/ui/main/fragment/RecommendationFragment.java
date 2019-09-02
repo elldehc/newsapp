@@ -27,7 +27,7 @@ public class RecommendationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         assert activity != null;
-        Toast.makeText(activity, "Test", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(activity, "Test", Toast.LENGTH_SHORT).show();
         new Recommender(view,activity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         toolbar = view.findViewById(R.id.newsToolbar);
         activity.setSupportActionBar(toolbar);

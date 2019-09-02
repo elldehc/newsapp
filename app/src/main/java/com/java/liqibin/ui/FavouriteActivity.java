@@ -36,11 +36,21 @@ public class FavouriteActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         ActionBar ab=getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowHomeEnabled(true);
         // 设置Fragment
         favouriteFragment=new FavouriteFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.favourite_container_frame, favouriteFragment).commit();
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+            //overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
 }

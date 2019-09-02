@@ -167,11 +167,11 @@ public class NewsActivity extends AppCompatActivity {
             case R.id.share_qzone:
                 showShare(QZone.NAME);
                 return true;
-            case R.id.toggleday:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
-                recreate();
-                //showAnimation();
-                return true;
+//            case R.id.toggleday:
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
+//                recreate();
+//                //showAnimation();
+//                return true;
             case android.R.id.home:
                 finish();
                 return true;
@@ -194,6 +194,7 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         finish();
+        //overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
         return true;
     }
 

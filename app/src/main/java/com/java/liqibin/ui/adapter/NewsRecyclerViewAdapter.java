@@ -108,6 +108,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                 newsTitle.setTextColor(activity.getResources().getColor(R.color.gray));
                 intent.putExtra(EXTRA_MESSAGE, message);
                 activity.startActivity(intent);
+                //activity.overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
             });
         }
 
