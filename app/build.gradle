@@ -31,7 +31,7 @@ MobSDK {
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\hhw\\.android\\newsapp.jks')
+            storeFile file('newsapp.jks')
             storePassword '309309'
             keyAlias = 'newsapp'
             keyPassword '309309'
