@@ -38,10 +38,6 @@ public class SearchResultFragment extends Fragment {
     private TextView showEmpty;
     private SearchView searchView;
 
-    private OfflineLoadNewsTask.QueryHelper queryHelper;
-    private OfflineLoadNewsTask.QueryHelper loadMoreHelper;
-    private Cursor cursor;
-
     private String keyword;
 
     @Override
@@ -99,14 +95,6 @@ public class SearchResultFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "无法连接到网络！", Toast.LENGTH_SHORT).show();
             showEmpty.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (cursor != null) {
-            cursor.close();
         }
     }
 

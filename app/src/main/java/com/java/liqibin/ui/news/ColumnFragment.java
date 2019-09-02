@@ -115,16 +115,17 @@ public class ColumnFragment extends Fragment {
             }
         });
 
-        if (CheckNetworkState.isNetwordConnected(activity)) {
-            offline = false;
-            new LoadNewsTask(activity, newsList, showEmpty)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new NewsQuery().setCategories(columnName[0]));
-        } else {
-            offline = true;
-            Toast.makeText(activity, "无法连接到网络，将加载离线新闻！", Toast.LENGTH_SHORT).show();
-            new OfflineLoadNewsTask(activity, newsList, showEmpty, queryHelper)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
+//        if (CheckNetworkState.isNetwordConnected(activity)) {
+//            offline = false;
+//            new LoadNewsTask(activity, newsList, showEmpty)
+//                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new NewsQuery().setCategories(columnName[0]));
+//        } else {
+//            offline = true;
+//            Toast.makeText(activity, "无法连接到网络，将加载离线新闻！", Toast.LENGTH_SHORT).show();
+//            new OfflineLoadNewsTask(activity, newsList, showEmpty, queryHelper)
+//                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        }
+        refreshLayout.autoRefresh(0, 0, 0, false);
     }
 
     @Override
