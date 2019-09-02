@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.NewsActivity;
 import com.java.liqibin.R;
-import com.java.liqibin.ui.task.DownloadImageTask;
 
 public class NewsOfflineRecyclerViewAdapter extends RecyclerView.Adapter<NewsOfflineRecyclerViewAdapter.NewsViewHolder> {
 

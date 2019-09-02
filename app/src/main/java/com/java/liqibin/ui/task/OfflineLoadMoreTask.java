@@ -2,6 +2,7 @@ package com.java.liqibin.ui.task;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +13,8 @@ import java.lang.ref.WeakReference;
 public class OfflineLoadMoreTask extends OfflineLoadNewsTask {
     private WeakReference<SmartRefreshLayout> refLayout;
 
-    public OfflineLoadMoreTask(Activity activity, RecyclerView recyclerView, QueryHelper helper, SmartRefreshLayout layout) {
-        super(activity, recyclerView, helper);
+    public OfflineLoadMoreTask(Activity activity, RecyclerView recyclerView, TextView showEmpty, QueryHelper helper, SmartRefreshLayout layout) {
+        super(activity, recyclerView, showEmpty, helper);
         this.refLayout = new WeakReference<>(layout);
     }
 
