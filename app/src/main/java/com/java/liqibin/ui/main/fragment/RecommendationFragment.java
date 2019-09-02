@@ -1,10 +1,12 @@
 package com.java.liqibin.ui.main.fragment;
 
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +27,8 @@ public class RecommendationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         assert activity != null;
-        new Recommender(view,activity).execute();
+        Toast.makeText(activity, "Test", Toast.LENGTH_SHORT).show();
+        new Recommender(view,activity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         toolbar = view.findViewById(R.id.newsToolbar);
         activity.setSupportActionBar(toolbar);
     }

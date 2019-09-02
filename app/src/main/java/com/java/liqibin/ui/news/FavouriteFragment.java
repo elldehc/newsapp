@@ -3,10 +3,12 @@ package com.java.liqibin.ui.news;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,12 +65,13 @@ public class FavouriteFragment extends Fragment {
             return cursor;
         };
 
+        TextView showEmpty = view.findViewById(R.id.show_empty);
         SmartRefreshLayout refreshLayout = view.findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener((layout) -> {
-                new OfflineRefreshTask(activity, newsList, queryHelper, (SmartRefreshLayout) layout).execute();
+                new OfflineRefreshTask(activity, newsList, showEmpty, queryHelper, (SmartRefreshLayout) layout).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
         refreshLayout.setOnLoadMoreListener((layout) -> {
-            new OfflineLoadMoreTask(activity, newsList, loadMoreHelper, (SmartRefreshLayout) layout).execute();
+            new OfflineLoadMoreTask(activity, newsList, showEmpty, loadMoreHelper, (SmartRefreshLayout) layout).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
         refreshLayout.autoRefresh(0, 0, 0, false);
     }
