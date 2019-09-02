@@ -6,10 +6,9 @@ MobSDK {
     ShareSDK {
         devInfo {
             QQ {
-                appId "100371282"
-                appKey "aed9b0303e3ed1e27bae87c33761161d"
-                bypassApproval true
-                shareByAppClient false
+                appId "101780902"
+                appKey "2079ef3fa1734892eb428f03b9572e20"
+                //bypassApproval true
             }
             Wechat {
                 appId "wx4868b35061f87885"
@@ -22,14 +21,22 @@ MobSDK {
                 bypassApproval true
             }
             QZone {
-                appId "100371282"
-                appKey "aed9b0303e3ed1e27bae87c33761161d"
-                bypassApproval true
+                appId "101780902"
+                appKey "2079ef3fa1734892eb428f03b9572e20"
+                //bypassApproval true
             }
         }
     }
 }
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\hhw\\.android\\newsapp.jks')
+            storePassword '309309'
+            keyAlias = 'newsapp'
+            keyPassword '309309'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
     defaultConfig {

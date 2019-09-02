@@ -38,6 +38,9 @@ import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
@@ -70,18 +73,8 @@ public class NewsActivity extends AppCompatActivity {
                 "newsID = '"+message+"'", null, null, null, null);
         cursor.moveToFirst();
         favored=cursor.getInt(7);
-        database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
-                " (newsID, category, image, title, publisher, publishTime, json, favored, lastview) values (" +
-                "'" + cursor.getString(0) + "', " +
-                "'" + cursor.getString(1) + "', " +
-                "'" + cursor.getString(2) + "', " +
-                "'" + cursor.getString(3) + "', " +
-                "'" + cursor.getString(4) + "', " +
-                "'" + cursor.getString(5) + "', " +
-                "'" + cursor.getString(6) + "', " +
-                favored +", "+
-                timenow+
-                ");");
+        database.execSQL("update " + NewsDatabase.TABLE_NAME +
+                " set lastview = "+timenow+" where newsID = '"+cursor.getString(0)+"'");
 
         Gson gson=new Gson();
         news=gson.fromJson(cursor.getString(6), News.class);
@@ -155,21 +148,11 @@ public class NewsActivity extends AppCompatActivity {
 //            case R.id.share:
 //                return true;
             case R.id.addtofav:
-                database.execSQL("insert or replace into " + NewsDatabase.TABLE_NAME +
-                        " (newsID, category, image, title, publisher, publishTime, json, favored, lastview) values (" +
-                        "'" + cursor.getString(0) + "', " +
-                        "'" + cursor.getString(1) + "', " +
-                        "'" + cursor.getString(2) + "', " +
-                        "'" + cursor.getString(3) + "', " +
-                        "'" + cursor.getString(4) + "', " +
-                        "'" + cursor.getString(5) + "', " +
-                        "'" + cursor.getString(6) + "', " +
-                        (favored==0?"1, ":"0, ") +
-                        timenow+
-                        ");");
                 favored=1-favored;
+                database.execSQL("update " + NewsDatabase.TABLE_NAME +
+                        " set favored = "+favored+" where newsID = '"+cursor.getString(0)+"'");
                 addtofav.setTitle(getString(favored==1?R.string.deletefromfav:R.string.addtofav));
-                Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), ""+favored, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.share_qq:
                 showShare(QQ.NAME);
@@ -202,7 +185,7 @@ public class NewsActivity extends AppCompatActivity {
         oks.setText(news.content);
         if(images.size()>0)oks.setImageUrl(images.get(0));
         oks.setUrl("http://sharesdk.cn");
-        oks.show(MobSDK.getContext());
+        oks.show(this);
     }
 
 }

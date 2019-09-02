@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     switchFragment(newsFragment);
                     return true;
                 case R.id.navigation_recommendation:
+                    setSupportActionBar(newsFragment.getToolbar());
                     switchFragment(recommendationFragment);
                     return true;
                 case R.id.navigation_me:
