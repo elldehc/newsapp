@@ -18,7 +18,7 @@ import java.lang.ref.WeakReference;
 public class LoadNewsTask extends AsyncTask<NewsQuery, Void, NewsResponse> {
 
     private WeakReference<Activity> refActivity;
-    private WeakReference<RecyclerView> refView;
+    protected WeakReference<RecyclerView> refView;
     private WeakReference<TextView> refShowEmpty;
 
     public LoadNewsTask(Activity activity, RecyclerView view, TextView showEmpty) {

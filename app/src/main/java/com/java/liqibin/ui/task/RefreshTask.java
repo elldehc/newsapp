@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.liqibin.model.bean.NewsResponse;
+import com.java.liqibin.ui.adapter.NewsRecyclerViewAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.lang.ref.WeakReference;
@@ -20,6 +21,13 @@ public class RefreshTask extends LoadNewsTask {
 
     @Override
     protected void onPostExecute(NewsResponse response) {
+        RecyclerView view = refView.get();
+        if (view != null) {
+            NewsRecyclerViewAdapter adapter = (NewsRecyclerViewAdapter) view.getAdapter();
+            if (adapter != null) {
+                adapter.clearNews();
+            }
+        }
         super.onPostExecute(response);
         SmartRefreshLayout smartRefreshLayout = refLayout.get();
         if(smartRefreshLayout != null) {
