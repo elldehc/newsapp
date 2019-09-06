@@ -9,10 +9,10 @@
                 android:title="@string/share_qq" />
             <item android:id="@+id/share_qzone"
                 android:title="@string/share_qzone" />
-            <item android:id="@+id/share_wx"
-                android:title="@string/share_wx" />
-            <item android:id="@+id/share_wxpyq"
-                android:title="@string/share_wxpyq" />
+<!--            <item android:id="@+id/share_wx"-->
+<!--                android:title="@string/share_wx" />-->
+<!--            <item android:id="@+id/share_wxpyq"-->
+<!--                android:title="@string/share_wxpyq" />-->
         </menu>
     </item>
     <item android:id="@+id/addtofav"

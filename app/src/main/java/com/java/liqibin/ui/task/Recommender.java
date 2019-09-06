@@ -76,9 +76,13 @@ public class Recommender extends AsyncTask<Void, Void, String[]> {
         Arrays.sort(tmp, new Comparator<Map.Entry>() {
             @Override
             public int compare(Map.Entry entry, Map.Entry t1) {
-                return Double.compare((Double) entry.getValue(), (Double) t1.getValue());
+                return -Double.compare((Double) entry.getValue(), (Double) t1.getValue());
             }
         });
+        for(int i=0;i<mp.size();i++)
+        {
+            System.err.println((String)tmp[i].getKey()+(Double)tmp[i].getValue());
+        }
         for (int i = 0; i < mp.size(); i++) {
             ans[i + 1] = (String) tmp[i].getKey();
             if (i == 4) break;

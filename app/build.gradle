@@ -81,4 +81,5 @@ dependencies {
     annotationProcessor 'com.youngfeng.android:snake-compiler:0.3.0'
     implementation 'com.github.jessieeeee:SelectLabelTab:v1.0.2'
     implementation 'com.github.limuyang2:CardSearchView:1.1.0.1'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

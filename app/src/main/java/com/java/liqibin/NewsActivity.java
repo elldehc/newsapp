@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.java.liqibin.model.bean.News;
 import com.java.liqibin.model.db.NewsDatabase;
 import com.mob.MobSDK;
 import com.stx.xhb.xbanner.XBanner;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
@@ -42,10 +44,14 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
+import cn.sharesdk.wechat.utils.WXMediaMessage;
+import cn.sharesdk.wechat.utils.WXWebpageObject;
+import okhttp3.internal.Util;
 
 @EnableDragToClose
 public class NewsActivity extends AppCompatActivity {
@@ -158,14 +164,45 @@ public class NewsActivity extends AppCompatActivity {
             case R.id.share_qq:
                 showShare(QQ.NAME);
                 return true;
-            case R.id.share_wx:
-                showShare(Wechat.NAME);
-                return true;
-            case R.id.share_wxpyq:
-                showShare(WechatMoments.NAME);
-                return true;
+//            case R.id.share_wx:
+//                //showShare(Wechat.NAME);
+//
+//                return true;
+//            case R.id.share_wxpyq:
+//                showShare(WechatMoments.NAME);
+//                Platform.ShareParams params=new Platform.ShareParams();
+//                params.setShareType(Platform.SHARE_TEXT);
+//                params.setText(news.content.length()>140?news.content.substring(0,137)+"...":news.content);
+//                params.setTitle(news.title);
+//                if(images.size()>0)
+//                {
+//                    params.setShareType(Platform.SHARE_IMAGE);
+//                    params.setImageUrl(images.get(0));
+//                }
+//                Platform wechat=ShareSDK.getPlatform(WechatMoments.NAME);
+//                wechat.share(params);
+//                return true;
             case R.id.share_qzone:
                 showShare(QZone.NAME);
+//                OnekeyShare oks = new OnekeyShare();
+//                oks.disableSSOWhenAuthorize();
+//                oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+//                    @Override
+//                    public void onShare(Platform platform, Platform.ShareParams shareParams) {
+//                        shareParams.setShareType(Platform.SHARE_WEBPAGE);
+//                        shareParams.setText(news.content.length()>140?news.content.substring(0,137)+"...":news.content);
+//                        shareParams.setTitle(news.title);
+////                        if(images.size()>0)
+////                        {
+////                            shareParams.setShareType(Platform.SHARE_IMAGE);
+////                            shareParams.setImageUrl(images.get(0));
+////                        }
+//                        shareParams.setUrl("http://183.172.241.130:5500/?id="+news.newsID+"&time="+news.publishTime);
+//                        platform.share(shareParams);
+//                    }
+//
+//                });
+//                oks.show(this);
                 return true;
 //            case R.id.toggleday:
 //                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
@@ -185,10 +222,10 @@ public class NewsActivity extends AppCompatActivity {
             oks.setPlatform(platform);
         }
         oks.setTitle(news.title);
-        oks.setTitleUrl("http://sharesdk.cn");
+        oks.setTitleUrl("http://149.248.13.44:5500/?id="+news.newsID+"&time="+news.publishTime.replace(" ","%20"));
         oks.setText(news.content);
         if(images.size()>0)oks.setImageUrl(images.get(0));
-        oks.setUrl("http://sharesdk.cn");
+        oks.setUrl("http://149.248.13.44:5500/?id="+news.newsID+"&time="+news.publishTime.replace(" ","%20"));
         oks.show(this);
     }
     @Override

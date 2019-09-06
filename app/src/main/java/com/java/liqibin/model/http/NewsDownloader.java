@@ -58,7 +58,7 @@ public class NewsDownloader {
             URL url = new URL(builder.toString());
             URLConnection connection = url.openConnection();
             Scanner input = new Scanner(connection.getInputStream()).useDelimiter("\\A");
-            String json = input.next();
+            String json = input.next().replace("'","''");
 
             Gson gson = new Gson();
             NewsResponse response = gson.fromJson(json, NewsResponse.class);
