@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -120,12 +121,16 @@ public class NewsActivity extends AppCompatActivity {
             //vview.setVideoPath(news.video);
             vview.setVideoURI(Uri.parse(news.video));
             vview.setMediaController(new MediaController(this));
+            vview.setZOrderOnTop(true);
+            vview.start();
         }
         else
         {
             VideoView vview=findViewById(R.id.videoView2);
             vview.setVisibility(View.GONE);
         }
+        ScrollView scrollView=(ScrollView)findViewById(R.id.scrollView2);
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
     }
     @Override
     public void onDestroy() {

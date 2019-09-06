@@ -41,7 +41,9 @@ public class NewsOfflineRecyclerViewAdapter extends RecyclerView.Adapter<NewsOff
             synchronized (cursor) {
                 cursor.moveToPosition(position);
                 String url = cursor.getString(cursor.getColumnIndex("image"));
-                url = url.substring(1, url.length() - 1).split(", ")[0];
+                if (url.startsWith("[") && url.endsWith("]")) {
+                    url = url.substring(1, url.length() - 1).split(", ")[0];
+                }
                 holder.newsIcon.setImageResource(R.mipmap.ic_launcher);
                 holder.newsTitle.setText(cursor.getString(cursor.getColumnIndex("title")));
                 holder.newsPublisher.setText(cursor.getString(cursor.getColumnIndex("publisher")));
